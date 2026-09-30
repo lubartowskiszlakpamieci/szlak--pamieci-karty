@@ -130,8 +130,9 @@ nav{position:sticky;top:0;z-index:50;background:rgba(237,227,208,.96);backdrop-f
 .pin-grave{background:#5A5750 !important;border-color:rgba(0,0,0,.5) !important;}
 .map-chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px;scrollbar-width:none;}
 .map-chips::-webkit-scrollbar{display:none;}
-.map-sheet{position:absolute;left:12px;right:12px;bottom:12px;z-index:15;background:var(--surface-raised);
-  border:1px solid var(--hairline);border-radius:12px;padding:16px 18px;max-height:45%;overflow-y:auto;
+.map-sheet{position:absolute;left:12px;right:12px;bottom:12px;z-index:2000;background:var(--surface-raised);
+  border:1px solid var(--hairline);border-radius:12px;padding:16px 18px;max-height:75%;overflow-y:auto;
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
   display:none;box-shadow:0 8px 24px rgba(0,0,0,.5);}
 .map-sheet.open{display:block;}
 .map-sheet h3{font-size:15px;margin-bottom:4px;}
@@ -560,9 +561,13 @@ function initMap(){
     const photoHtml = p.photo
       ? '<img src="'+p.photo+'" alt="'+p.name+'" style="width:100%;max-width:150px;max-height:110px;object-fit:cover;border-radius:6px;margin-bottom:6px;">'
       : '';
-    const teaser = p.desc ? (p.desc.length>110 ? p.desc.slice(0,110).trim()+'…' : p.desc) : '';
+    const hasMore = !!(p.desc && p.desc.length>110);
+    const teaser = p.desc ? (hasMore ? p.desc.slice(0,110).trim()+'…' : p.desc) : '';
     const teaserHtml = teaser
       ? '<p style="margin:4px 0 8px;font-size:12.5px;line-height:1.5;color:#2B2318;">'+teaser+'</p>'
+      : '';
+    const linkHtml = hasMore
+      ? '<a href="#" class="popup-link" data-pid="'+p.id+'" style="font-size:12px;font-weight:600;color:#8A6B26;text-decoration:none;">Zobacz pełną historię →</a>'
       : '';
 
     const popupHtml =
@@ -570,7 +575,7 @@ function initMap(){
       + photoHtml
       + '<h3 style="margin:0 0 3px;font-size:14.5px;color:#2B2318;">'+p.name+'</h3>'
       + teaserHtml
-      + '<a href="#" class="popup-link" data-pid="'+p.id+'" style="font-size:12px;font-weight:600;color:#8A6B26;text-decoration:none;">Zobacz pełną historię →</a>'
+      + linkHtml
       + '</div>';
 
     m.bindPopup(popupHtml, {maxWidth:220});
@@ -656,6 +661,13 @@ function openMapSheet(p){
 }
 document.getElementById('mapSheetClose').onclick=function(){document.getElementById('mapSheet').classList.remove('open');};
 
+// Zapobiega przekazywaniu scrolla/dotyku z panelu do mapy Leaflet pod spodem
+// (inaczej mapa probowalaby sie zoomowac/przesuwac podczas przewijania tekstu w panelu)
+(function(){
+  const sheet = document.getElementById('mapSheet');
+  sheet.addEventListener('wheel', function(e){ e.stopPropagation(); }, {passive:true});
+  sheet.addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:true});
+})();
 
 
 
