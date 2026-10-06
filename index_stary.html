@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Lubartowski Szlak Pamięci</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#EDE3D0">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#EDE3D0; --surface:#FFFFFF; --surface-raised:#F6EFDE; --hairline:#DDD0B0;
+  --parchment:#2B2318; --muted:#7A6C54;
+  --brass:#8A6B26; --brass-dim:#5F4B1C; --brick:#7A322B; --steel:#46545B; --violet:#56495F;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--ink);color:var(--parchment);font-family:'IBM Plex Sans',sans-serif;line-height:1.5;}
+h1,h2,h3{font-family:'Spectral',serif;font-weight:600;margin:0;}
+a{color:var(--brass);}
+::selection{background:var(--brass);color:var(--parchment);}
+
+nav{position:sticky;top:0;z-index:50;background:rgba(237,227,208,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--hairline);}
+.navrow{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:12px 18px;
+  overflow-x:auto;scrollbar-width:none;}
+.navrow::-webkit-scrollbar{display:none;}
+.brand{display:flex;align-items:center;gap:8px;flex:none;margin-right:14px;}
+.brand .crest{color:var(--brass);font-size:20px;}
+.brand span{font-family:'Spectral',serif;font-weight:600;font-size:16px;white-space:nowrap;}
+.navlink{flex:none;background:none;border:none;color:var(--muted);font-family:'IBM Plex Sans',sans-serif;
+  font-size:13.5px;font-weight:500;padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;}
+.navlink:hover{color:var(--parchment);}
+.navlink.active{background:var(--surface);color:var(--brass);font-weight:600;}
+.navlink:focus-visible{outline:2px solid var(--brass);outline-offset:1px;}
+
+.view{display:none;max-width:1100px;margin:0 auto;padding:34px 18px 70px;}
+.view.active{display:block;animation:fade .35s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.hero{text-align:center;padding:30px 10px 10px;}
+.hero .crest-big{font-size:38px;color:var(--brass);}
+.hero h1{font-size:clamp(28px,5vw,42px);margin:10px 0 6px;}
+.hero .sub{color:var(--muted);font-size:15px;}
+.quote{max-width:640px;margin:34px auto;padding:22px 26px;background:var(--surface);
+  border-left:3px solid var(--brass);border-radius:0 10px 10px 0;font-style:italic;font-size:17px;}
+.quote cite{display:block;margin-top:10px;font-style:normal;color:var(--brass);font-size:13px;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:36px 0;}
+.stat{background:var(--surface);border:1px solid var(--hairline);border-radius:12px;padding:20px;text-align:center;}
+.stat .num{font-family:'Spectral',serif;font-size:30px;font-weight:700;color:var(--brass);}
+.stat .lab{font-size:12px;color:var(--muted);margin-top:4px;}
+.prose{font-size:15px;line-height:1.75;color:var(--parchment);}
+.prose h3{font-size:17px;color:var(--brass);margin:26px 0 10px;}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:30px;}
+.navcard{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:20px;
+  cursor:pointer;transition:border-color .15s, transform .15s;display:block;text-decoration:none;color:inherit;}
+.navcard:hover{border-color:var(--brass);transform:translateY(-2px);}
+.navcard .ic{font-size:22px;color:var(--brass);margin-bottom:8px;}
+.navcard h3{font-size:16px;margin-bottom:4px;}
+.navcard p{font-size:12.5px;color:var(--muted);margin:0;}
+.navcard-external{border-style:dashed;}
+
+.sec-head{margin-bottom:22px;}
+.sec-head h2{font-size:26px;}
+.sec-head p{color:var(--muted);font-size:14px;margin-top:6px;}
+
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+.search{flex:1;min-width:180px;background:var(--surface);border:1px solid var(--hairline);
+  border-radius:10px;padding:10px 14px;color:var(--parchment);font-size:14px;font-family:inherit;}
+.search:focus-visible{outline:2px solid var(--brass);}
+.filterchip{background:var(--surface);border:1px solid var(--hairline);color:var(--muted);
+  font-size:12px;padding:7px 12px;border-radius:100px;cursor:pointer;white-space:nowrap;}
+.filterchip[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:var(--parchment);font-weight:600;}
+.filterchip:focus-visible{outline:2px solid var(--brass);}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.pcard{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:18px;cursor:pointer;}
+.pcard:hover{border-color:var(--brass);}
+.pcard .thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;margin-bottom:12px;filter:grayscale(30%) sepia(15%);}
+.pcard .thumb-placeholder{width:100%;aspect-ratio:1;border-radius:10px;margin-bottom:12px;background:var(--surface-raised);
+  display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--hairline);}
+.pcard .badge{display:inline-block;font-size:10.5px;padding:3px 9px;border-radius:100px;background:var(--surface-raised);
+  color:var(--brass);margin-bottom:10px;}
+.pcard h3{font-size:16px;line-height:1.3;}
+.pcard .ps{color:var(--brass-dim);font-size:12.5px;font-style:italic;margin:2px 0 8px;}
+.pcard .role{font-size:12.5px;color:var(--muted);line-height:1.5;}
+.pcard .years{font-size:11px;color:var(--muted);margin-top:8px;font-family:monospace;}
+.empty{color:var(--muted);font-size:13px;padding:30px;text-align:center;}
+
+#modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none;
+  align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;}
+#modal-overlay.open{display:flex;}
+#modal{background:var(--surface-raised);border:1px solid var(--hairline);border-radius:16px;
+  max-width:560px;width:100%;padding:28px;position:relative;}
+#modal .mclose{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);
+  font-size:20px;cursor:pointer;}
+#modal .mbadge{display:inline-block;font-size:11px;padding:4px 10px;border-radius:100px;background:var(--brass);
+  color:var(--parchment);font-weight:600;margin-bottom:12px;}
+#modal h2{font-size:21px;line-height:1.3;}
+#modal .mphoto{width:100%;max-height:260px;object-fit:cover;border-radius:12px;margin-bottom:16px;filter:grayscale(30%) sepia(15%);}
+#modal .mps{color:var(--brass-dim);font-style:italic;margin:2px 0 4px;}
+#modal .myears{font-size:12px;color:var(--muted);font-family:monospace;margin-bottom:14px;}
+#modal .mrole{font-size:13.5px;color:var(--parchment);font-weight:500;margin-bottom:14px;padding-bottom:14px;
+  border-bottom:1px solid var(--hairline);}
+#modal .mbio{font-size:13.5px;line-height:1.7;color:var(--parchment);}
+
+#map-wrap{position:relative;height:70vh;min-height:420px;border-radius:14px;overflow:hidden;
+  border:1px solid var(--hairline);}
+#map{height:100%;}
+.leaflet-container{background:#EDE3D0;font-family:'IBM Plex Sans',sans-serif;}
+.leaflet-tooltip.pin-tip{background:var(--surface-raised);color:var(--parchment);border:1px solid var(--hairline);
+  border-radius:6px;padding:4px 9px;font-size:12px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.leaflet-tooltip.pin-tip::before{border-top-color:var(--hairline);}
+.locate-btn{width:34px;height:34px;background:#fff;border:2px solid rgba(0,0,0,.2);border-radius:4px;
+  cursor:pointer;font-size:18px;line-height:1;color:var(--parchment);display:flex;align-items:center;justify-content:center;}
+.locate-btn:hover{background:#f4f4f4;}
+.locate-btn.loading{animation:locate-pulse 1s ease-in-out infinite;color:var(--brass);}
+@keyframes locate-pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.cluster-pin{width:36px;height:36px;border-radius:50%;background:var(--brass);color:#fff;font-weight:700;
+  font-size:13px;display:flex;align-items:center;justify-content:center;border:3px solid rgba(255,255,255,.85);
+  box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.leaflet-popup-content-wrapper{border-radius:10px;}
+.leaflet-popup-content{margin:11px 13px;}
+.pin{width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+  border:2px solid rgba(0,0,0,.35);box-shadow:0 2px 5px rgba(0,0,0,.5);}
+.pin-grave{background:#5A5750 !important;border-color:rgba(0,0,0,.5) !important;}
+.map-chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px;scrollbar-width:none;}
+.map-chips::-webkit-scrollbar{display:none;}
+.map-sheet{position:absolute;left:12px;right:12px;bottom:12px;z-index:2000;background:var(--surface-raised);
+  border:1px solid var(--hairline);border-radius:12px;padding:16px 18px;max-height:75%;overflow-y:auto;
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  display:none;box-shadow:0 8px 24px rgba(0,0,0,.5);}
+.map-sheet.open{display:block;}
+.map-sheet h3{font-size:15px;margin-bottom:4px;}
+.map-sheet .meta{font-size:12px;color:var(--muted);margin-bottom:2px;}
+.map-sheet .desc{font-size:12.5px;line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px solid var(--hairline);}
+.map-sheet .mclose2{float:right;background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;}
+
+.plot-card{background:var(--surface);border:1px solid var(--hairline);border-radius:12px;
+  padding:20px 22px;margin-bottom:16px;}
+.plot-breadcrumb{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Sans',sans-serif;
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--brass-dim);margin-bottom:6px;}
+.plot-pin{font-size:11px;}
+.plot-chevron{color:var(--hairline);}
+.plot-kwatera{color:var(--brass);font-weight:600;}
+.plot-title{font-family:'Spectral',serif;font-size:20px;line-height:1.3;color:var(--parchment);margin:0 0 2px;}
+.plot-sektor{font-size:12px;color:var(--muted);margin:0 0 10px;}
+.plot-profile{font-size:13.5px;line-height:1.7;margin:0 0 10px;color:var(--parchment);}
+.plot-footer{display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--hairline);padding-top:10px;margin-top:4px;}
+.plot-buried{font-size:12px;color:var(--muted);}
+.plot-badge{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);
+  border:1px solid var(--hairline);border-radius:100px;padding:2px 9px;}
+.plot-stats{text-align:center;font-size:12px;color:var(--muted);margin-top:8px;padding-top:14px;
+  border-top:1px solid var(--hairline);}
+
+.hold-card{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:18px 20px;margin-bottom:12px;}
+.hold-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}
+.hold-card h3{font-size:15.5px;}
+.hold-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+.hold-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.hold-badge{font-size:10.5px;padding:3px 9px;border-radius:100px;background:var(--surface-raised);color:var(--brass);}
+.hold-candle{font-size:14px;}
+.hold-text{font-size:13px;font-style:italic;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--hairline);}
+.cta-box{margin-top:24px;background:var(--surface);border:1px dashed var(--brass-dim);border-radius:14px;
+  padding:22px;text-align:center;}
+.cta-box h3{font-size:16px;margin-bottom:6px;}
+.cta-box p{font-size:13px;color:var(--muted);}
+
+footer{text-align:center;padding:26px 18px 40px;color:var(--muted);font-size:12px;border-top:1px solid var(--hairline);}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;}}
+
+#loader-overlay{position:fixed;inset:0;z-index:200;background:var(--ink);display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;transition:opacity .3s ease;}
+#loader-overlay.hidden{opacity:0;pointer-events:none;}
+.loader-spin{width:34px;height:34px;border:3px solid var(--hairline);border-top-color:var(--brass);
+  border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loader-text{color:var(--muted);font-size:13px;}
+.loader-error{color:var(--brick);font-size:14px;text-align:center;max-width:320px;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div id="loader-overlay">
+  <div class="loader-spin"></div>
+  <div class="loader-text">Ładowanie danych szlaku…</div>
+</div>
+<script>
+// Samoleczenie: usuwa wszelkie stare/zombie Service Workery (np. z poprzednich
+// wersji strony), zeby nie serwowaly zcache'owanych, nieaktualnych odpowiedzi
+// (w tym bledow 404 zapisanych zanim dany plik zaczal istniec).
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(regs){
+    regs.forEach(function(reg){
+      var url = (reg.active && reg.active.scriptURL) || '';
+      if (!url.endsWith('/sw.js')) {
+        reg.unregister();
+        if ('caches' in window) {
+          caches.keys().then(function(names){ names.forEach(function(n){ caches.delete(n); }); });
+        }
+      }
+    });
+  });
+}
+</script>
+
+<nav>
+  <div class="navrow" id="navrow">
+    <div class="brand"><span class="crest">&#9860;</span><span>Lubartowski Szlak Pamięci</span></div>
+    <button class="navlink" data-view="home">Strona Główna</button>
+    <button class="navlink" data-view="panteon">Panteon</button>
+    <button class="navlink" data-view="mapa">Mapa</button>
+    <button class="navlink" data-view="nekropolia">Nekropolia</button>
+    <button class="navlink" data-view="hold">Księga Hołdu</button>
+  </div>
+</nav>
+
+<section class="view" id="view-home">
+  <div class="hero">
+    <div class="crest-big">&#9860;</div>
+    <h1>Lubartowski Szlak Pamięci</h1>
+    <p class="sub">Projekt upamiętniający bohaterów AK, 27. WDP i podziemia niepodległościowego z rejonu Lubartowa</p>
+  </div>
+
+  <div class="quote">
+    „Jeśli zapomnę o nich, Ty, Boże na niebie, zapomnij o mnie!”
+    <cite>— Adam Mickiewicz, Dziady cz. III</cite>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="prose">
+    <p>Projekt powstał, aby ocalić od zapomnienia bohaterów Armii Krajowej, cywilnych obrońców i mieszkańców ziemi lubartowskiej, którzy oddali życie za wolność. Przechodząc przez kolejne punkty szlaku, poznajesz ich historię, miejsca walk i niezłomny duch Lubartowa 1944 roku.</p>
+    <h3>Od walk o wyzwolenie do powojennych represji</h3>
+    <p>W lipcu 1944 roku Lubartów stał się jednym z kluczowych punktów akcji „Burza” na Lubelszczyźnie. Po połączonym uderzeniu oddziałów Armii Krajowej oraz 27. Wołyńskiej Dywizji Piechoty miasto zostało wyzwolone spod okupacji niemieckiej, lecz powiew wolności trwał krótko. Tuż po przejęciu władzy przez aparat sowiecki i NKWD lokalne miejsca oporu zamieniono w punkty represji, tworząc tragiczny rozdział historii ziemi lubartowskiej — kontynuowany przez oddziały WiN kpt. Zdzisława Brońskiego „Uskoka” i ppor. Stanisława Kuchciewicza „Wiktora” aż do 1953 roku.</p>
+  </div>
+
+  <div class="navgrid">
+    <div class="navcard" data-view="panteon"><div class="ic">&#127894;</div><h3>Panteon Bohaterów</h3><p>29 udokumentowanych biogramów — od Obwodu AK po Żołnierzy Wyklętych</p></div>
+    <div class="navcard" data-view="mapa"><div class="ic">&#128506;</div><h3>Mapa Szlaku</h3><p>44 punkty — od Lubartowa po Zamek Lubelski i Piaski</p></div>
+    <div class="navcard" data-view="nekropolia"><div class="ic">&#128367;</div><h3>Nekropolia</h3><p>Groby i mogiły na Cmentarzu Parafialnym</p></div>
+    <div class="navcard" data-view="hold"><div class="ic">&#128214;</div><h3>Księga Hołdu</h3><p>Wpisy odwiedzających składających hołd bohaterom</p></div>
+    <a class="navcard navcard-external" href="https://lubartowskiszlakpamieci.github.io/nowy-bastion/" target="_blank" rel="noopener">
+      <div class="ic">&#128737;</div><h3>Bastion Pamięci ↗</h3><p>Projekt towarzyszący — Szlakiem Uskoka i Wiktora (1944–1953)</p>
+    </a>
+  </div>
+</section>
+
+<section class="view" id="view-panteon">
+  <div class="sec-head">
+    <h2>Panteon Bohaterów</h2>
+    <p>29 udokumentowanych postaci związanych z Lubartowskim Szlakiem Pamięci</p>
+  </div>
+  <div class="controls">
+    <input class="search" id="pSearch" type="text" placeholder="Szukaj po nazwisku, pseudonimie lub roli…">
+  </div>
+  <div class="controls" id="pFilters"></div>
+  <div class="pgrid" id="pGrid"></div>
+</section>
+
+<section class="view" id="view-mapa">
+  <div class="sec-head">
+    <h2>Mapa Szlaku</h2>
+    <p>44 punkty — Lubartów i okolice, od 1863 do współczesności</p>
+  </div>
+  <div class="map-chips" id="mapChips"></div>
+  <div id="map-wrap">
+    <div id="map"></div>
+    <div class="map-sheet" id="mapSheet">
+      <button class="mclose2" id="mapSheetClose">&times;</button>
+      <h3 id="msTitle"></h3>
+      <div class="meta" id="msType"></div>
+      <div class="meta" id="msAddr"></div>
+      <div id="msDescWrap"></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="view-nekropolia">
+  <div class="sec-head">
+    <h2>Nekropolia</h2>
+    <p>Groby, mogiły i miejsca pochówku — Cmentarz Parafialny w Lubartowie</p>
+  </div>
+  <div class="map-chips" id="plotFilters"></div>
+  <div id="nekroList"></div>
+  <div id="plotStats" class="plot-stats"></div>
+</section>
+
+<section class="view" id="view-hold">
+  <div class="sec-head">
+    <h2>Księga Hołdu i Pamięci</h2>
+    <p>Wpisy złożone przez odwiedzających — osobiste słowa pamięci skierowane do bohaterów szlaku</p>
+  </div>
+  <div id="holdList"></div>
+  <div class="cta-box">
+      <!-- Sekcja Formularza Księgi Hołdu -->
+      <div class="coda-form-section" style="margin: 30px 0; text-align: center; padding: 25px; background: #fafafa; border-radius: 12px; border: 1px solid #eee;">
+    <h3 style="color: #2c3e50; margin-bottom: 10px;">Chcesz dołączyć do grona osób, które upamiętniły bohaterów?</h3>
+    <p style="margin-bottom: 20px; color: #555;">Wypełnij formularz, aby złożyć swój hołd i dodać wpis do cyfrowego archiwum.</p>
+
+    <a href="https://docs.superhuman.com/@b-b/szlak-pamieci-lubartow/ksiega-ho-du-i-pamieci-wpisy-587"
+       target="_blank" 
+       rel="noopener noreferrer" 
+       style="display: inline-block; background-color: #8b0000; color: #ffffff; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+      ✍️ Złóż swój hołd (Otwórz formularz)
+    </a>
+  </div>
+</div>
+<footer>Lubartowski Szlak Pamięci — projekt żywy i wciąż rozwijany · dane zweryfikowane źródłowo (IPN, archiwa muzealne, relacje rodzin)</footer>
+
+<div id="modal-overlay">
+  <div id="modal">
+    <button class="mclose" id="modalClose">&times;</button>
+    <span class="mbadge" id="mBadge"></span>
+    <h2 id="mName"></h2>
+    <div class="mps" id="mPs"></div>
+    <div class="myears" id="mYears"></div>
+    <div class="mrole" id="mRole"></div>
+    <div class="mbio" id="mBio"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
+<script>
+let PANTHEON = [], POINTS = [], PLOTS = [], HOLD = [];
+let groups = [], activeGroup = null;
+const pFiltersEl = document.getElementById('pFilters');
+function refreshPFilters(){
+  Array.prototype.forEach.call(pFiltersEl.children, function(b,i){
+    const g = i===0?null:groups[i-1];
+    b.setAttribute('aria-pressed', g===activeGroup?'true':'false');
+  });
+}
+let activePlotSector = null;
+function renderPlots(){
+  const sectors = [...new Set(PLOTS.map(function(p){return p.sektor;}).filter(Boolean))];
+  const filtersEl = document.getElementById('plotFilters');
+  filtersEl.innerHTML = '';
+  const allBtn = document.createElement('button');
+  allBtn.className='filterchip'; allBtn.textContent='Wszystkie'; allBtn.setAttribute('aria-pressed', activePlotSector===null?'true':'false');
+  allBtn.onclick=function(){activePlotSector=null; renderPlots();};
+  filtersEl.appendChild(allBtn);
+  sectors.forEach(function(s){
+    const b=document.createElement('button');
+    b.className='filterchip'; b.textContent=s; b.setAttribute('aria-pressed', s===activePlotSector?'true':'false');
+    b.onclick=function(){activePlotSector=s; renderPlots();};
+    filtersEl.appendChild(b);
+  });
+
+  const visible = activePlotSector ? PLOTS.filter(function(p){return p.sektor===activePlotSector;}) : PLOTS;
+  document.getElementById('nekroList').innerHTML = visible.map(function(p){
+    const buried = p.pochowani && p.pochowani.length;
+    return '<div class="plot-card">'+
+      '<div class="plot-breadcrumb">'+
+        '<span class="plot-pin">&#128205;</span>'+
+        '<span>Cmentarz Parafialny</span>'+
+        '<span class="plot-chevron">&#8250;</span>'+
+        '<span class="plot-kwatera">'+(p.kwatera?'Kwatera '+p.kwatera:(p.sektor||''))+'</span>'+
+      '</div>'+
+      '<h3 class="plot-title">'+p.nazwa_obiektu+'</h3>'+
+      (p.sektor?'<p class="plot-sektor">'+p.sektor+'</p>':'')+
+      (p.kompletny_profil?'<p class="plot-profile">'+p.kompletny_profil+'</p>':'')+
+      '<div class="plot-footer">'+
+        '<span class="plot-buried">&#128101; '+(buried?buried+' pochowanych':'Profil w przygotowaniu')+'</span>'+
+        (!p.kompletny_profil?'<span class="plot-badge">skrócony</span>':'')+
+      '</div>'+
+    '</div>';
+  }).join('');
+
+  document.getElementById('plotStats').textContent =
+    PLOTS.length+' obiektów zmapowanych · '+PLOTS.filter(function(p){return p.kompletny_profil;}).length+' z pełnym profilem';
+}
+const ERAS = {
+  "POWSTANIE STYCZNIOWE": {label:"1863", hex:"#8B3A32", order:0},
+  "WOJNA 1920":            {label:"1920", hex:"#5B6B73", order:1},
+  "II WOJNA SWIATOWA":     {label:"1939–45", hex:"#B4903F", order:2},
+  "OKRES POWOJENNY":       {label:"Powojenne", hex:"#6B5D74", order:3},
+};
+const views=['home','panteon','mapa','nekropolia','hold'];
+let mapInited=false;
+function showView(v){
+  views.forEach(x=>document.getElementById('view-'+x).classList.toggle('active', x===v));
+  document.querySelectorAll('.navlink').forEach(b=>b.classList.toggle('active', b.dataset.view===v));
+  if(v==='mapa'){ if(!mapInited){initMap(); mapInited=true;} setTimeout(()=>map.invalidateSize(),50); }
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('[data-view]').forEach(el=>el.addEventListener('click',()=>showView(el.dataset.view)));
+
+async function boot(){
+  try {
+    const [panteonRes, punktyRes, nekroRes, holdRes] = await Promise.all([
+      fetch('content/panteon.json').then(r=>r.json()),
+      fetch('content/punkty.json').then(r=>r.json()),
+      fetch('content/nekropolia.json').then(r=>r.json()),
+      fetch('content/hold.json').then(r=>r.json()),
+    ]);
+    PANTHEON = panteonRes.heroes || [];
+    POINTS = punktyRes.points || [];
+    PLOTS = nekroRes.plots || [];
+    HOLD = holdRes.entries || [];
+
+    document.getElementById('stats').innerHTML =
+      '<div class="stat"><div class="num">'+POINTS.length+'</div><div class="lab">punkty szlaku</div></div>'+
+      '<div class="stat"><div class="num">'+PANTHEON.length+'</div><div class="lab">bohaterów w Panteonie</div></div>'+
+      '<div class="stat"><div class="num">1863–2025</div><div class="lab">zakres czasowy</div></div>'+
+      '<div class="stat"><div class="num">'+HOLD.length+'</div><div class="lab">wpisów w Księdze Hołdu</div></div>';
+    
+    groups = [...new Set(PANTHEON.map(p=>p.group))];
+    activeGroup = null;
+    const allBtn = document.createElement('button');
+    allBtn.className='filterchip'; allBtn.textContent='Wszyscy'; allBtn.setAttribute('aria-pressed','true');
+    allBtn.onclick=function(){activeGroup=null; refreshPFilters(); renderPanteon();};
+    pFiltersEl.appendChild(allBtn);
+    groups.forEach(function(g){
+      const b=document.createElement('button');
+      b.className='filterchip'; b.textContent=g; b.setAttribute('aria-pressed','false');
+      b.onclick=function(){activeGroup=g; refreshPFilters(); renderPanteon();};
+      pFiltersEl.appendChild(b);
+    });
+    renderPanteon();
+
+    renderPlots();
+    document.getElementById('holdList').innerHTML = HOLD.map(function(h){
+      return '<div class="hold-card">'+
+        '<div class="hold-top">'+
+          '<div><h3>'+h.hero+'</h3><div class="hold-meta">'+h.author+' · '+h.date+'</div></div>'+
+          '<div class="hold-badges">'+
+            '<span class="hold-badge">'+h.cat+'</span>'+
+            '<span class="hold-badge">'+h.form+'</span>'+
+            '<span class="hold-candle">'+(h.candle?'\uD83D\uDD6F\uFE0F':'\u26AB')+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="hold-text">Treść tego hołdu oczekuje na uzupełnienie przez autora wpisu.</div>'+
+        '</div>';
+    }).join('');
+    showView('home');
+    document.getElementById('loader-overlay').classList.add('hidden');
+  } catch (err) {
+    console.error('Nie udalo sie wczytac tresci szlaku:', err);
+    document.getElementById('loader-overlay').innerHTML =
+      '<div class="loader-error">Nie udało się wczytać treści szlaku.<br>Sprawdź połączenie z internetem i odśwież stronę.</div>';
+  }
+}
+boot();
+
+function renderPanteon(){
+  const q = document.getElementById('pSearch').value.toLowerCase();
+  const grid = document.getElementById('pGrid');
+  const filtered = PANTHEON.filter(function(p){
+    if(activeGroup && p.group!==activeGroup) return false;
+    if(!q) return true;
+    return (p.name+p.ps+p.role).toLowerCase().indexOf(q)!==-1;
+  });
+  if(!filtered.length){ grid.innerHTML='<div class="empty">Brak wyników.</div>'; return; }
+  grid.innerHTML = filtered.map(function(p){
+    const idx = PANTHEON.indexOf(p);
+    const thumb = p.photo
+      ? '<img class="thumb" src="'+p.photo+'" alt="" loading="lazy" onerror="this.outerHTML=\'<div class=&quot;thumb-placeholder&quot;>&#127894;</div>\'">'
+      : '<div class="thumb-placeholder">&#127894;</div>';
+    return '<div class="pcard" data-idx="'+idx+'">'+
+      thumb+
+      '<span class="badge">'+p.group+'</span>'+
+      '<h3>'+(p.st?p.st+' ':'')+p.name+'</h3>'+
+      (p.ps?'<div class="ps">ps. „'+p.ps+'”</div>':'')+
+      '<div class="role">'+p.role+'</div>'+
+      (p.years?'<div class="years">'+p.years+'</div>':'')+
+      '</div>';
+  }).join('');
+  Array.prototype.forEach.call(grid.querySelectorAll('.pcard'), function(c){
+    c.onclick=function(){ openModal(PANTHEON[c.dataset.idx]); };
+  });
+}
+renderPanteon();
+
+function openModal(p){
+  document.getElementById('mBadge').textContent=p.group;
+  document.getElementById('mName').textContent=(p.st?p.st+' ':'')+p.name;
+  document.getElementById('mPs').textContent = p.ps? 'ps. „'+p.ps+'”':'';
+  document.getElementById('mYears').textContent = p.years||'';
+  document.getElementById('mRole').textContent = p.role;
+  document.getElementById('mBio').textContent = p.bio;
+  const modal = document.getElementById('modal');
+  const existingPhoto = modal.querySelector('.mphoto');
+  if(existingPhoto) existingPhoto.remove();
+  if(p.photo){
+    const img = document.createElement('img');
+    img.className='mphoto'; img.src=p.photo; img.alt='';
+    img.onerror=function(){ img.remove(); };
+    modal.insertBefore(img, modal.querySelector('.mbadge'));
+  }
+  document.getElementById('modal-overlay').classList.add('open');
+}
+document.getElementById('modalClose').onclick=function(){document.getElementById('modal-overlay').classList.remove('open');};
+document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target.id==='modal-overlay')e.currentTarget.classList.remove('open');});
+
+let map, mapMarkers={}, mapActiveEra=null, clusterGroup=null, userLocMarker=null;
+
+// Prosty przycisk "Lokalizuj mnie" - wlasna kontrolka Leaflet (bez dodatkowej biblioteki)
+const LocateControl = L.Control.extend({
+  options: {position:'bottomright'},
+  onAdd: function(){
+    const btn = L.DomUtil.create('button', 'locate-btn');
+    btn.innerHTML = '&#8982;';
+    btn.title = 'Pokaz moja lokalizacje';
+    btn.setAttribute('aria-label','Pokaz moja lokalizacje');
+    L.DomEvent.disableClickPropagation(btn);
+    L.DomEvent.on(btn, 'click', function(){
+      btn.classList.add('loading');
+      map.locate({setView:true, maxZoom:16, enableHighAccuracy:true});
+    });
+    return btn;
+  }
+});
+
+function initMap(){
+  map = L.map('map', {zoomControl:false}).setView([51.38, 22.70], 9);
+
+  // --- MAPBOX (docelowe, ale token obecnie nie dziala - "brak mapy" na tescie diagnostycznym) ---
+  // Gdy token zostanie naprawiony w koncie Mapbox (console.mapbox.com/account/access-tokens),
+  // odkomentuj ponizsze 6 linii i zakomentuj/usun blok "FALLBACK: Esri" ponizej.
+  //
+  // const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3psYWtwYW1pZWNpIiwiYSI6ImNtc2Q2ajQzbTFuYm8yenF5NzlxMm94NmIifQ.onRsmrhonmqffC3GfOnYFg';
+  // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/{z}/{x}/{y}?access_token='+MAPBOX_TOKEN, {
+  //   tileSize: 512, zoomOffset: -1, maxZoom: 19,
+  //   attribution: '© Mapbox © OpenStreetMap'
+  // }).addTo(map);
+
+  // --- FALLBACK: Esri Light Gray Canvas (dziala bez klucza, sprawdzone) ---
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom:16,
+    attribution:'Kafle: Esri, HERE, Garmin, &copy; OpenStreetMap contributors, GIS User Community'
+  }).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom:16
+  }).addTo(map);
+
+  L.control.zoom({position:'bottomright'}).addTo(map);
+  new LocateControl().addTo(map);
+
+  map.on('locationfound', function(e){
+    document.querySelector('.locate-btn').classList.remove('loading');
+    if(userLocMarker) map.removeLayer(userLocMarker);
+    userLocMarker = L.circleMarker(e.latlng, {
+      radius:8, color:'#fff', weight:2, fillColor:'#2E7CD6', fillOpacity:1
+    }).addTo(map).bindTooltip('Jestes tutaj', {direction:'top', offset:[0,-10]});
+  });
+  map.on('locationerror', function(){
+    document.querySelector('.locate-btn').classList.remove('loading');
+    alert('Nie udalo sie ustalic lokalizacji. Sprawdz uprawnienia lokalizacji w przegladarce.');
+  });
+
+  clusterGroup = L.markerClusterGroup({
+    maxClusterRadius:50,
+    iconCreateFunction: function(cluster){
+      return L.divIcon({html:'<div class="cluster-pin">'+cluster.getChildCount()+'</div>', className:'', iconSize:[36,36]});
+    }
+  });
+
+  POINTS.forEach(function(p){
+    const icon = L.divIcon({className:'', html:'<div class="pin" style="background:'+ERAS[p.era].hex+'"></div>', iconSize:[24,24], iconAnchor:[12,24]});
+    const m = L.marker([p.lat, p.lng], {icon});
+
+    const photoHtml = p.photo
+      ? '<img src="'+p.photo+'" alt="'+p.name+'" style="width:100%;max-width:150px;max-height:110px;object-fit:cover;border-radius:6px;margin-bottom:6px;">'
+      : '';
+    const hasMore = !!(p.desc && p.desc.length>110);
+    const teaser = p.desc ? (hasMore ? p.desc.slice(0,110).trim()+'…' : p.desc) : '';
+    const teaserHtml = teaser
+      ? '<p style="margin:4px 0 8px;font-size:12.5px;line-height:1.5;color:#2B2318;">'+teaser+'</p>'
+      : '';
+    const linkHtml = hasMore
+      ? '<a href="#" class="popup-link" data-pid="'+p.id+'" style="font-size:12px;font-weight:600;color:#8A6B26;text-decoration:none;">Zobacz pełną historię →</a>'
+      : '';
+
+    const popupHtml =
+      '<div class="pin-popup" style="font-family:\'IBM Plex Sans\',sans-serif;max-width:190px;">'
+      + photoHtml
+      + '<h3 style="margin:0 0 3px;font-size:14.5px;color:#2B2318;">'+p.name+'</h3>'
+      + teaserHtml
+      + linkHtml
+      + '</div>';
+
+    m.bindPopup(popupHtml, {maxWidth:220});
+    m.bindTooltip(p.name, {direction:'top', offset:[0,-22], className:'pin-tip'});
+    clusterGroup.addLayer(m);
+    mapMarkers[p.id]=m;
+  });
+  PLOTS.forEach(function(p){
+    if(typeof p.lat!=='number' || typeof p.lng!=='number') return;
+    const icon = L.divIcon({className:'', html:'<div class="pin pin-grave"></div>', iconSize:[24,24], iconAnchor:[12,24]});
+    const m = L.marker([p.lat, p.lng], {icon});
+    const kwSek = [p.kwatera?'Kwatera '+p.kwatera:'', p.sektor||''].filter(Boolean).join(' · ');
+    const locHtml = kwSek
+      ? '<p style="margin:0 0 4px;font-size:12px;color:#7A6C54;">Cmentarz Parafialny — '+kwSek+'</p>'
+      : '<p style="margin:0 0 4px;font-size:12px;color:#7A6C54;">Cmentarz Parafialny</p>';
+    const profileHtml = p.kompletny_profil
+      ? '<p style="margin:0;font-size:12.5px;line-height:1.5;color:#2B2318;">'+p.kompletny_profil+'</p>'
+      : '<p style="margin:0;font-size:12px;font-style:italic;color:#7A6C54;">Profil w przygotowaniu</p>';
+    const buriedHtml = (p.pochowani && p.pochowani.length)
+      ? '<p style="margin:6px 0 0;font-size:11.5px;line-height:1.5;color:#7A6C54;">&#128101; '+p.pochowani.join(', ')+'</p>'
+      : '';
+    const popupHtml =
+      '<div class="pin-popup" style="font-family:\'IBM Plex Sans\',sans-serif;max-width:210px;">'
+      + '<span style="font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:#7A6C54;">Nekropolia</span>'
+      + '<h3 style="margin:2px 0 4px;font-size:14.5px;color:#2B2318;">'+p.nazwa_obiektu+'</h3>'
+      + locHtml
+      + profileHtml
+      + buriedHtml
+      + '</div>';
+    m.bindPopup(popupHtml, {maxWidth:240});
+    m.bindTooltip(p.nazwa_obiektu, {direction:'top', offset:[0,-22], className:'pin-tip'});
+    clusterGroup.addLayer(m);
+  });
+  map.addLayer(clusterGroup);
+
+  // Delegacja klikniecia w link "Zobacz pelna historie" wewnatrz popupu
+  map.on('popupopen', function(e){
+    const link = e.popup.getElement().querySelector('.popup-link');
+    if(link){
+      link.addEventListener('click', function(ev){
+        ev.preventDefault();
+        const pid = parseInt(link.getAttribute('data-pid'),10);
+        const p = POINTS.find(function(pt){return pt.id===pid;});
+        if(p){ map.closePopup(); openMapSheet(p); }
+      });
+    }
+  });
+
+  const chipsEl = document.getElementById('mapChips');
+  const allC = document.createElement('button'); allC.className='filterchip'; allC.textContent='Wszystkie'; allC.setAttribute('aria-pressed','true');
+  allC.onclick=function(){mapActiveEra=null; refreshMapChips(); applyMapFilter();};
+  chipsEl.appendChild(allC);
+  Object.keys(ERAS).sort(function(a,b){return ERAS[a].order-ERAS[b].order;}).forEach(function(era){
+    const c=document.createElement('button'); c.className='filterchip'; c.setAttribute('aria-pressed','false');
+    c.innerHTML='<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+ERAS[era].hex+';margin-right:5px;"></span>'+ERAS[era].label;
+    c.onclick=function(){mapActiveEra=era; refreshMapChips(); applyMapFilter();};
+    chipsEl.appendChild(c);
+  });
+}
+function refreshMapChips(){
+  const chipsEl = document.getElementById('mapChips');
+  const keys = Object.keys(ERAS).sort(function(a,b){return ERAS[a].order-ERAS[b].order;});
+  Array.prototype.forEach.call(chipsEl.children, function(c,i){
+    const era = i===0?null:keys[i-1];
+    c.setAttribute('aria-pressed', era===mapActiveEra?'true':'false');
+  });
+}
+function applyMapFilter(){
+  POINTS.forEach(function(p){
+    const show = !mapActiveEra || p.era===mapActiveEra;
+    const m = mapMarkers[p.id];
+    const has = clusterGroup.hasLayer(m);
+    if(show && !has) clusterGroup.addLayer(m);
+    if(!show && has) clusterGroup.removeLayer(m);
+  });
+}
+function openMapSheet(p){
+  document.getElementById('msTitle').textContent = p.id+'. '+p.name;
+  document.getElementById('msType').textContent = p.type;
+  document.getElementById('msAddr').textContent = p.addr;
+  document.getElementById('msDescWrap').innerHTML = p.desc? '<div class="desc">'+p.desc+'</div>':'';
+  document.getElementById('mapSheet').classList.add('open');
+}
+document.getElementById('mapSheetClose').onclick=function(){document.getElementById('mapSheet').classList.remove('open');};
+
+// Zapobiega przekazywaniu scrolla/dotyku z panelu do mapy Leaflet pod spodem
+// (inaczej mapa probowalaby sie zoomowac/przesuwac podczas przewijania tekstu w panelu)
+(function(){
+  const sheet = document.getElementById('mapSheet');
+  sheet.addEventListener('wheel', function(e){ e.stopPropagation(); }, {passive:true});
+  sheet.addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:true});
+})();
+
+
+
+// ============================================================
+// REJESTRACJA SERVICE WORKERA — dzialanie offline
+// ============================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch((err) => {
+      console.warn('Service Worker nie zostal zarejestrowany:', err);
+    });
+  });
+}
+
+</script>
+</body>
+</html>
