@@ -288,8 +288,46 @@ footer{text-align:center;padding:26px 18px 40px;color:var(--muted);font-size:12p
   <div id="holdList"></div>
   <div class="cta-box">
     <h3>Chcesz dołączyć do grona osób, które upamiętniły bohaterów?</h3>
-    <p>Formularz „Złóż swój hołd” dostępny jest w wersji roboczej projektu w Coda.</p>
-  </div>
+    <!-- Sekcja Księgi Hołdu z aktywnym formularzem -->
+<section id="hold-section" class="card-box">
+  <h2 style="font-family:'Spectral',serif; margin-bottom:1rem; color:var(--brass,#8A6B26);">
+    Dodaj wpis do Księgi Hołdu
+  </h2>
+
+ <form id="hold-form" style="display:flex; flex-direction:column; gap:1rem;">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">
+      <div>
+        <label for="hold-author" style="display:block; font-weight:bold; margin-bottom:0.3rem;">
+          Imię i nazwisko / Szkoła / Organizacja *
+        </label>
+        <input type="text" id="hold-author" required placeholder="np. Jan Kowalski / Szkoła Podstawowa nr 1" 
+               style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;">
+      </div>
+
+      <div>
+        <label for="hold-target" style="display:block; font-weight:bold; margin-bottom:0.3rem;">
+          Upamiętniany bohater / Miejsce *
+        </label>
+        <input type="text" id="hold-target" required placeholder="np. ppor. Czesław Rossiński „Kowal”" 
+               style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;">
+      </div>
+    </div>
+
+    <div>
+      <label for="hold-content" style="display:block; font-weight:bold; margin-bottom:0.3rem;">
+        Treść hołdu / Pamięci *
+      </label>
+      <textarea id="hold-content" rows="4" required placeholder="Wpisz słowa pamięci lub podziękowania..." 
+                style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;"></textarea>
+    </div>
+
+    <button type="submit" 
+            style="align-self:flex-start; padding:0.6rem 1.5rem; background-color:var(--brass,#8A6B26); color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">
+      Wyślij wpis do weryfikacji
+    </button>
+  </form>
+  
+  <div id="hold-form-status" style="margin-top:1rem; font-style:italic; display:none;"></div>
 </section>
 
 <footer>Lubartowski Szlak Pamięci — projekt żywy i wciąż rozwijany · dane zweryfikowane źródłowo (IPN, archiwa muzealne, relacje rodzin)</footer>
