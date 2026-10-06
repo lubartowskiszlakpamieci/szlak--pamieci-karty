@@ -139,6 +139,12 @@ nav{position:sticky;top:0;z-index:50;background:rgba(237,227,208,.96);backdrop-f
 .map-sheet .meta{font-size:12px;color:var(--muted);margin-bottom:2px;}
 .map-sheet .desc{font-size:12.5px;line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px solid var(--hairline);}
 .map-sheet .mclose2{float:right;background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;}
+.lector-btn{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:8px 16px;
+  background:var(--surface);border:1px solid var(--hairline);border-radius:100px;
+  color:var(--brass);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;}
+.lector-btn:hover{border-color:var(--brass);background:var(--surface-raised);}
+.lector-btn.speaking{background:var(--brass);border-color:var(--brass);color:var(--parchment);}
+.lector-btn.lector-hidden{display:none;}
 
 .plot-card{background:var(--surface);border:1px solid var(--hairline);border-radius:12px;
   padding:20px 22px;margin-bottom:16px;}
@@ -190,24 +196,6 @@ footer{text-align:center;padding:26px 18px 40px;color:var(--muted);font-size:12p
   <div class="loader-spin"></div>
   <div class="loader-text">Ładowanie danych szlaku…</div>
 </div>
-<script>
-// Samoleczenie: usuwa wszelkie stare/zombie Service Workery (np. z poprzednich
-// wersji strony), zeby nie serwowaly zcache'owanych, nieaktualnych odpowiedzi
-// (w tym bledow 404 zapisanych zanim dany plik zaczal istniec).
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(regs){
-    regs.forEach(function(reg){
-      var url = (reg.active && reg.active.scriptURL) || '';
-      if (!url.endsWith('/sw.js')) {
-        reg.unregister();
-        if ('caches' in window) {
-          caches.keys().then(function(names){ names.forEach(function(n){ caches.delete(n); }); });
-        }
-      }
-    });
-  });
-}
-</script>
 
 <nav>
   <div class="navrow" id="navrow">
@@ -277,6 +265,7 @@ if ('serviceWorker' in navigator) {
       <div class="meta" id="msType"></div>
       <div class="meta" id="msAddr"></div>
       <div id="msDescWrap"></div>
+      <button class="lector-btn" id="msLector">🎧 Posłuchaj (Lektor)</button>
     </div>
   </div>
 </section>
@@ -298,19 +287,11 @@ if ('serviceWorker' in navigator) {
   </div>
   <div id="holdList"></div>
   <div class="cta-box">
-      <!-- Sekcja Formularza Księgi Hołdu -->
-      <div class="coda-form-section" style="margin: 30px 0; text-align: center; padding: 25px; background: #fafafa; border-radius: 12px; border: 1px solid #eee;">
-    <h3 style="color: #2c3e50; margin-bottom: 10px;">Chcesz dołączyć do grona osób, które upamiętniły bohaterów?</h3>
-    <p style="margin-bottom: 20px; color: #555;">Wypełnij formularz, aby złożyć swój hołd i dodać wpis do cyfrowego archiwum.</p>
-
-    <a href="https://docs.superhuman.com/@b-b/szlak-pamieci-lubartow/ksiega-ho-du-i-pamieci-wpisy-587"
-       target="_blank" 
-       rel="noopener noreferrer" 
-       style="display: inline-block; background-color: #8b0000; color: #ffffff; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 1.05rem; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-      ✍️ Złóż swój hołd (Otwórz formularz)
-    </a>
+    <h3>Chcesz dołączyć do grona osób, które upamiętniły bohaterów?</h3>
+    <p>Formularz „Złóż swój hołd” dostępny jest w wersji roboczej projektu w Coda.</p>
   </div>
-</div>
+</section>
+
 <footer>Lubartowski Szlak Pamięci — projekt żywy i wciąż rozwijany · dane zweryfikowane źródłowo (IPN, archiwa muzealne, relacje rodzin)</footer>
 
 <div id="modal-overlay">
@@ -322,6 +303,7 @@ if ('serviceWorker' in navigator) {
     <div class="myears" id="mYears"></div>
     <div class="mrole" id="mRole"></div>
     <div class="mbio" id="mBio"></div>
+    <button class="lector-btn" id="mLector">🎧 Posłuchaj (Lektor)</button>
   </div>
 </div>
 
@@ -330,6 +312,51 @@ if ('serviceWorker' in navigator) {
 <script>
 let PANTHEON = [], POINTS = [], PLOTS = [], HOLD = [];
 let groups = [], activeGroup = null;
+
+/* ===== LEKTOR (Web Speech API) ===== */
+const ttsSupported = 'speechSynthesis' in window;
+let lectorState = { button: null };
+
+function stripLectorBrackets(text){
+  return (text || '').replace(/\[[^\]]*\]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function resetLectorButton(button){
+  button.textContent = '🎧 Posłuchaj (Lektor)';
+  button.classList.remove('speaking');
+  if (lectorState.button === button) lectorState.button = null;
+}
+
+function stopLector(){
+  if (!ttsSupported) return;
+  window.speechSynthesis.cancel();
+  if (lectorState.button) resetLectorButton(lectorState.button);
+}
+
+function setupLectorButton(button, getText){
+  if (!ttsSupported){ button.classList.add('lector-hidden'); return; }
+  button.classList.remove('lector-hidden');
+  button.onclick = function(){
+    const samButton = lectorState.button === button;
+    window.speechSynthesis.cancel();
+    if (lectorState.button) resetLectorButton(lectorState.button);
+    if (samButton) return;
+
+    const text = stripLectorBrackets(getText());
+    if (!text) return;
+
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'pl-PL';
+    utter.onend = function(){ resetLectorButton(button); };
+    utter.onerror = function(){ resetLectorButton(button); };
+
+    lectorState.button = button;
+    button.textContent = '⏹ Zatrzymaj';
+    button.classList.add('speaking');
+    window.speechSynthesis.speak(utter);
+  };
+}
+
 const pFiltersEl = document.getElementById('pFilters');
 function refreshPFilters(){
   Array.prototype.forEach.call(pFiltersEl.children, function(b,i){
@@ -337,6 +364,7 @@ function refreshPFilters(){
     b.setAttribute('aria-pressed', g===activeGroup?'true':'false');
   });
 }
+
 let activePlotSector = null;
 function renderPlots(){
   const sectors = [...new Set(PLOTS.map(function(p){return p.sektor;}).filter(Boolean))];
@@ -376,14 +404,17 @@ function renderPlots(){
   document.getElementById('plotStats').textContent =
     PLOTS.length+' obiektów zmapowanych · '+PLOTS.filter(function(p){return p.kompletny_profil;}).length+' z pełnym profilem';
 }
+
 const ERAS = {
   "POWSTANIE STYCZNIOWE": {label:"1863", hex:"#8B3A32", order:0},
   "WOJNA 1920":            {label:"1920", hex:"#5B6B73", order:1},
   "II WOJNA SWIATOWA":     {label:"1939–45", hex:"#B4903F", order:2},
   "OKRES POWOJENNY":       {label:"Powojenne", hex:"#6B5D74", order:3},
 };
+
 const views=['home','panteon','mapa','nekropolia','hold'];
 let mapInited=false;
+
 function showView(v){
   views.forEach(x=>document.getElementById('view-'+x).classList.toggle('active', x===v));
   document.querySelectorAll('.navlink').forEach(b=>b.classList.toggle('active', b.dataset.view===v));
@@ -413,6 +444,7 @@ async function boot(){
     
     groups = [...new Set(PANTHEON.map(p=>p.group))];
     activeGroup = null;
+    pFiltersEl.innerHTML = '';
     const allBtn = document.createElement('button');
     allBtn.className='filterchip'; allBtn.textContent='Wszyscy'; allBtn.setAttribute('aria-pressed','true');
     allBtn.onclick=function(){activeGroup=null; refreshPFilters(); renderPanteon();};
@@ -442,26 +474,29 @@ async function boot(){
     showView('home');
     document.getElementById('loader-overlay').classList.add('hidden');
   } catch (err) {
-    console.error('Nie udalo sie wczytac tresci szlaku:', err);
-    document.getElementById('loader-overlay').innerHTML =
-      '<div class="loader-error">Nie udało się wczytać treści szlaku.<br>Sprawdź połączenie z internetem i odśwież stronę.</div>';
+    console.error('Nie udało się wczytać treści szlaku:', err);
+    const loader = document.getElementById('loader-overlay');
+    if (loader) {
+      loader.innerHTML = '<div class="loader-error">Nie udało się wczytać treści szlaku.<br>Sprawdź połączenie z internetem i strukturę plików w folderze content/.</div>';
+    }
   }
 }
 boot();
 
 function renderPanteon(){
-  const q = document.getElementById('pSearch').value.toLowerCase();
+  const searchInput = document.getElementById('pSearch');
+  const q = searchInput ? searchInput.value.toLowerCase() : '';
   const grid = document.getElementById('pGrid');
   const filtered = PANTHEON.filter(function(p){
     if(activeGroup && p.group!==activeGroup) return false;
     if(!q) return true;
-    return (p.name+p.ps+p.role).toLowerCase().indexOf(q)!==-1;
+    return ((p.name||'')+(p.ps||'')+(p.role||'')).toLowerCase().indexOf(q)!==-1;
   });
   if(!filtered.length){ grid.innerHTML='<div class="empty">Brak wyników.</div>'; return; }
   grid.innerHTML = filtered.map(function(p){
     const idx = PANTHEON.indexOf(p);
     const thumb = p.photo
-      ? '<img class="thumb" src="'+p.photo+'" alt="" loading="lazy" onerror="this.outerHTML=\'<div class=&quot;thumb-placeholder&quot;>&#127894;</div>\'">'
+      ? '<img class="thumb" src="'+p.photo+'" alt="" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML=\'<div class=\\\’thumb-placeholder\\\’>&#127894;</div>\';">'
       : '<div class="thumb-placeholder">&#127894;</div>';
     return '<div class="pcard" data-idx="'+idx+'">'+
       thumb+
@@ -476,15 +511,18 @@ function renderPanteon(){
     c.onclick=function(){ openModal(PANTHEON[c.dataset.idx]); };
   });
 }
-renderPanteon();
+
+document.getElementById('pSearch').addEventListener('input', renderPanteon);
 
 function openModal(p){
+  stopLector();
   document.getElementById('mBadge').textContent=p.group;
   document.getElementById('mName').textContent=(p.st?p.st+' ':'')+p.name;
   document.getElementById('mPs').textContent = p.ps? 'ps. „'+p.ps+'”':'';
   document.getElementById('mYears').textContent = p.years||'';
   document.getElementById('mRole').textContent = p.role;
   document.getElementById('mBio').textContent = p.bio;
+  setupLectorButton(document.getElementById('mLector'), function(){ return p.bio; });
   const modal = document.getElementById('modal');
   const existingPhoto = modal.querySelector('.mphoto');
   if(existingPhoto) existingPhoto.remove();
@@ -496,19 +534,18 @@ function openModal(p){
   }
   document.getElementById('modal-overlay').classList.add('open');
 }
-document.getElementById('modalClose').onclick=function(){document.getElementById('modal-overlay').classList.remove('open');};
-document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target.id==='modal-overlay')e.currentTarget.classList.remove('open');});
+document.getElementById('modalClose').onclick=function(){stopLector();document.getElementById('modal-overlay').classList.remove('open');};
+document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target.id==='modal-overlay'){stopLector();e.currentTarget.classList.remove('open');}});
 
 let map, mapMarkers={}, mapActiveEra=null, clusterGroup=null, userLocMarker=null;
 
-// Prosty przycisk "Lokalizuj mnie" - wlasna kontrolka Leaflet (bez dodatkowej biblioteki)
 const LocateControl = L.Control.extend({
   options: {position:'bottomright'},
   onAdd: function(){
     const btn = L.DomUtil.create('button', 'locate-btn');
     btn.innerHTML = '&#8982;';
-    btn.title = 'Pokaz moja lokalizacje';
-    btn.setAttribute('aria-label','Pokaz moja lokalizacje');
+    btn.title = 'Pokaż moją lokalizację';
+    btn.setAttribute('aria-label','Pokaż moją lokalizację');
     L.DomEvent.disableClickPropagation(btn);
     L.DomEvent.on(btn, 'click', function(){
       btn.classList.add('loading');
@@ -521,17 +558,6 @@ const LocateControl = L.Control.extend({
 function initMap(){
   map = L.map('map', {zoomControl:false}).setView([51.38, 22.70], 9);
 
-  // --- MAPBOX (docelowe, ale token obecnie nie dziala - "brak mapy" na tescie diagnostycznym) ---
-  // Gdy token zostanie naprawiony w koncie Mapbox (console.mapbox.com/account/access-tokens),
-  // odkomentuj ponizsze 6 linii i zakomentuj/usun blok "FALLBACK: Esri" ponizej.
-  //
-  // const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3psYWtwYW1pZWNpIiwiYSI6ImNtc2Q2ajQzbTFuYm8yenF5NzlxMm94NmIifQ.onRsmrhonmqffC3GfOnYFg';
-  // L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/{z}/{x}/{y}?access_token='+MAPBOX_TOKEN, {
-  //   tileSize: 512, zoomOffset: -1, maxZoom: 19,
-  //   attribution: '© Mapbox © OpenStreetMap'
-  // }).addTo(map);
-
-  // --- FALLBACK: Esri Light Gray Canvas (dziala bez klucza, sprawdzone) ---
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
     maxZoom:16,
     attribution:'Kafle: Esri, HERE, Garmin, &copy; OpenStreetMap contributors, GIS User Community'
@@ -548,11 +574,11 @@ function initMap(){
     if(userLocMarker) map.removeLayer(userLocMarker);
     userLocMarker = L.circleMarker(e.latlng, {
       radius:8, color:'#fff', weight:2, fillColor:'#2E7CD6', fillOpacity:1
-    }).addTo(map).bindTooltip('Jestes tutaj', {direction:'top', offset:[0,-10]});
+    }).addTo(map).bindTooltip('Jesteś tutaj', {direction:'top', offset:[0,-10]});
   });
   map.on('locationerror', function(){
     document.querySelector('.locate-btn').classList.remove('loading');
-    alert('Nie udalo sie ustalic lokalizacji. Sprawdz uprawnienia lokalizacji w przegladarce.');
+    alert('Nie udało się ustalić lokalizacji. Sprawdź uprawnienia lokalizacji w przeglądarce.');
   });
 
   clusterGroup = L.markerClusterGroup({
@@ -563,7 +589,8 @@ function initMap(){
   });
 
   POINTS.forEach(function(p){
-    const icon = L.divIcon({className:'', html:'<div class="pin" style="background:'+ERAS[p.era].hex+'"></div>', iconSize:[24,24], iconAnchor:[12,24]});
+    const eraHex = (ERAS[p.era] && ERAS[p.era].hex) ? ERAS[p.era].hex : '#8A6B26';
+    const icon = L.divIcon({className:'', html:'<div class="pin" style="background:'+eraHex+'"></div>', iconSize:[24,24], iconAnchor:[12,24]});
     const m = L.marker([p.lat, p.lng], {icon});
 
     const photoHtml = p.photo
@@ -591,6 +618,7 @@ function initMap(){
     clusterGroup.addLayer(m);
     mapMarkers[p.id]=m;
   });
+
   PLOTS.forEach(function(p){
     if(typeof p.lat!=='number' || typeof p.lng!=='number') return;
     const icon = L.divIcon({className:'', html:'<div class="pin pin-grave"></div>', iconSize:[24,24], iconAnchor:[12,24]});
@@ -619,7 +647,6 @@ function initMap(){
   });
   map.addLayer(clusterGroup);
 
-  // Delegacja klikniecia w link "Zobacz pelna historie" wewnatrz popupu
   map.on('popupopen', function(e){
     const link = e.popup.getElement().querySelector('.popup-link');
     if(link){
@@ -633,6 +660,7 @@ function initMap(){
   });
 
   const chipsEl = document.getElementById('mapChips');
+  chipsEl.innerHTML = '';
   const allC = document.createElement('button'); allC.className='filterchip'; allC.textContent='Wszystkie'; allC.setAttribute('aria-pressed','true');
   allC.onclick=function(){mapActiveEra=null; refreshMapChips(); applyMapFilter();};
   chipsEl.appendChild(allC);
@@ -643,6 +671,7 @@ function initMap(){
     chipsEl.appendChild(c);
   });
 }
+
 function refreshMapChips(){
   const chipsEl = document.getElementById('mapChips');
   const keys = Object.keys(ERAS).sort(function(a,b){return ERAS[a].order-ERAS[b].order;});
@@ -651,45 +680,43 @@ function refreshMapChips(){
     c.setAttribute('aria-pressed', era===mapActiveEra?'true':'false');
   });
 }
+
 function applyMapFilter(){
   POINTS.forEach(function(p){
     const show = !mapActiveEra || p.era===mapActiveEra;
     const m = mapMarkers[p.id];
-    const has = clusterGroup.hasLayer(m);
-    if(show && !has) clusterGroup.addLayer(m);
-    if(!show && has) clusterGroup.removeLayer(m);
+    if(m){
+      const has = clusterGroup.hasLayer(m);
+      if(show && !has) clusterGroup.addLayer(m);
+      if(!show && has) clusterGroup.removeLayer(m);
+    }
   });
 }
+
 function openMapSheet(p){
+  stopLector();
   document.getElementById('msTitle').textContent = p.id+'. '+p.name;
   document.getElementById('msType').textContent = p.type;
   document.getElementById('msAddr').textContent = p.addr;
   document.getElementById('msDescWrap').innerHTML = p.desc? '<div class="desc">'+p.desc+'</div>':'';
+  setupLectorButton(document.getElementById('msLector'), function(){ return p.desc; });
   document.getElementById('mapSheet').classList.add('open');
 }
-document.getElementById('mapSheetClose').onclick=function(){document.getElementById('mapSheet').classList.remove('open');};
+document.getElementById('mapSheetClose').onclick=function(){stopLector();document.getElementById('mapSheet').classList.remove('open');};
 
-// Zapobiega przekazywaniu scrolla/dotyku z panelu do mapy Leaflet pod spodem
-// (inaczej mapa probowalaby sie zoomowac/przesuwac podczas przewijania tekstu w panelu)
 (function(){
   const sheet = document.getElementById('mapSheet');
   sheet.addEventListener('wheel', function(e){ e.stopPropagation(); }, {passive:true});
   sheet.addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:true});
 })();
 
-
-
-// ============================================================
-// REJESTRACJA SERVICE WORKERA — dzialanie offline
-// ============================================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch((err) => {
-      console.warn('Service Worker nie zostal zarejestrowany:', err);
+      console.warn('Service Worker nie został zarejestrowany:', err);
     });
   });
 }
-
 </script>
 </body>
 </html>
