@@ -20,7 +20,7 @@
     },
     {
       "id": 3,
-      "name": miejsce pamięci",
+      "name": "Miejsce pamięci",
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Cmentarna 4",
@@ -29,7 +29,7 @@
     },
     {
       "id": 4,
-      "name": miejsce pamięci "więzienie ",
+      "name": Miejsce pamięci -dawne więzienie ",
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Słowackiego 7",
