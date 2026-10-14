@@ -6,13 +6,13 @@
       "era": "WOJNA 1920",
       "type": "Obiekt historyczny / architektura",
       "addr": "Rynek 11, Gmach Starostwa",
-     "lat": 51.46234,
+      "lat": 51.46234,
       "lng": 22.60789
     },
     {
       "id": 2,
-      "name": "Bazylika św. Anna-Tablica pamięci żołnierzom Armii Krajowej ",
-      "era": "WOJNA ",
+      "name": "Bazylika św. Anny - Tablica pamięci żołnierzom Armii Krajowej",
+      "era": "WOJNA 1939–1945",
       "type": "Pomnik / tablica",
       "addr": "ul. Słowackiego 6",
       "lat": 51.46444,
@@ -20,7 +20,7 @@
     },
     {
       "id": 3,
-      "name": "Miejsce pamięci",
+      "name": "Miejsce Pamięci - dawna Siedziba Gestapo",
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Cmentarna 4",
@@ -29,7 +29,7 @@
     },
     {
       "id": 4,
-      "name": "Miejsce pamięci -dawne więzienie ",
+      "name": "Miejsce Pamięci - dawne więzienie Gestapo i UB",
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Słowackiego 7",
@@ -74,7 +74,7 @@
     },
     {
       "id": 9,
-      "name": "Posterunek ",
+      "name": "Posterunek MO i Urząd Bezpieczeństwa",
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Lipowa 3",
@@ -83,7 +83,7 @@
     },
     {
       "id": 10,
-      "name": "Pomnik ",
+      "name": "Pomnik Niepodległości",
       "era": "II WOJNA SWIATOWA",
       "type": "Pomnik / tablica",
       "addr": "Plac Wolności 1",
@@ -141,7 +141,7 @@
       "name": "Schron Wojskowy i Magazyn Broni",
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
-      "addr": ,
+      "addr": "ul. Nowa 5",
       "lat": 51.4555,
       "lng": 22.6001
     },
@@ -329,20 +329,18 @@
       "name": "Dawne więzienie w Lubartowie",
       "era": "OKRES POWOJENNY",
       "type": "Miejsce represji (1944–1956)",
-      "addr": "Lubartów (adres do doprecyzowania)",
+      "addr": "Lubartów",
       "lat": 51.4619,
       "lng": 22.6062
-      
     },
     {
       "id": 37,
-      "name": "Kościół Farny  św. Anny",
+      "name": "Kościół Farny św. Anny",
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci (1944–dziś)",
-      "addr": "Lubartów (adres do doprecyzowania)",
+      "addr": "ul. Słowackiego 6, Lubartów",
       "lat": 51.462,
       "lng": 22.607
-      
     },
     {
       "id": 38,
@@ -399,6 +397,16 @@
       "lng": 22.607
     },
     {
+      "id": 44,
+      "name": "Lublin — Zamek/WUBP",
+      "era": "OKRES POWOJENNY",
+      "type": "Miejsce represji (poza gminą Lubartów)",
+      "addr": "Zamek Lubelski, Lublin",
+      "lat": 51.2489,
+      "lng": 22.5717,
+      "desc": "Tu zamordowano 12.04.1945 r. por. Bolesława Mucharskiego ps. „Lekarz” (Punkt 27)."
+    },
+    {
       "id": 45,
       "name": "Firlej — Rejon Masowych Aresztowań (Wigilia 1944)",
       "era": "OKRES POWOJENNY",
@@ -437,16 +445,6 @@
       "lat": 51.4545153,
       "lng": 22.4211848,
       "desc": "Aresztowanie komendanta Rejonu V Dionizego Daniewskiego „Kruka” 22 grudnia 1945 r. zapoczątkowało lawinową „wsypę”, która w ciągu miesiąca doprowadziła do rozbicia sztabu całego Obwodu WiN."
-    },
-    {
-      "id": 44,
-      "name": "Lublin — Zamek/WUBP",
-      "era": "OKRES POWOJENNY",
-      "type": "Miejsce represji (poza gminą Lubartów)",
-      "addr": "Zamek Lubelski, Lublin",
-      "lat": 51.2489,
-      "lng": 22.5717,
-      "desc": "Tu zamordowano 12.04.1945 r. por. Bolesława Mucharskiego ps. „Lekarz” (Punkt 27)."
     }
   ]
 }
