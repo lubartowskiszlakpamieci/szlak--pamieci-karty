@@ -753,6 +753,7 @@ function applyMapFilter(){
 
 function openMapSheet(p){
   stopLector();
+  if (map) map.closePopup();
   document.getElementById('msTitle').textContent = p.id+'. '+p.name;
   document.getElementById('msType').textContent = p.type;
   document.getElementById('msAddr').textContent = p.addr;
