@@ -3,6 +3,7 @@ media:
   output: /images
 
 content:
+
   - name: panteon
     label: Panteon Bohaterów
     type: file
@@ -16,12 +17,15 @@ content:
         list: true
 
         fields:
-          - name: name
-            label: Imię i nazwisko
-            type: string
+          - { name: s, label: Identyfikator, type: string }
+          - { name: st, label: Stopień lub tytuł, type: string }
+          - { name: name, label: Imię i nazwisko, type: string }
+          - { name: ps, label: Pseudonim, type: string }
+          - { name: years, label: Lata życia, type: string }
+          - { name: role, label: Rola lub funkcja, type: string }
 
-          - name: role
-            label: Rola
+          - name: group
+            label: Grupa
             type: string
 
           - name: bio
@@ -29,5 +33,110 @@ content:
             type: text
 
           - name: photo
-            label: Zdjęcie
+            label: Zdjęcie portretowe
             type: image
+
+  - name: mapa
+    label: Mapa Szlaku
+    type: file
+    path: content/punkty.json
+    format: json
+
+    fields:
+      - name: points
+        label: Punkty Szlaku
+        type: object
+        list: true
+
+        fields:
+          - { name: id, label: Numer punktu, type: number }
+          - { name: name, label: Nazwa punktu, type: string }
+
+          - name: era
+            label: Epoka historyczna
+            type: string
+
+          - { name: type, label: Typ obiektu, type: string }
+          - { name: addr, label: Adres, type: string }
+
+          - name: lat
+            label: Szerokość geograficzna
+            type: number
+
+          - name: lng
+            label: Długość geograficzna
+            type: number
+
+          - name: desc
+            label: Opis historyczny
+            type: text
+
+  - name: nekropolia
+    label: Nekropolia
+    type: file
+    path: content/nekropolia.json
+    format: json
+
+    fields:
+      - name: plots
+        label: Obiekty Nekropolii
+        type: object
+        list: true
+
+        fields:
+
+          - name: id_mogily
+            label: Identyfikator mogiły
+            type: string
+
+          - name: nazwa_obiektu
+            label: Nazwa obiektu
+            type: string
+
+          - name: sektor
+            label: Sektor
+            type: string
+
+          - name: kwatera
+            label: Kwatera
+            type: string
+
+          - name: kompletny_profil
+            label: Profil historyczny
+            type: text
+
+          - name: pochowani
+            label: Osoby pochowane
+            type: string
+            list: true
+
+          - name: lat
+            label: Szerokość geograficzna
+            type: number
+
+          - name: lng
+            label: Długość geograficzna
+            type: number
+
+  - name: hold
+    label: Księga Hołdu
+    type: file
+    path: content/hold.json
+    format: json
+
+    fields:
+      - name: entries
+        label: Wpisy
+        type: object
+        list: true
+
+        fields:
+          - { name: hero, label: Bohater, type: string }
+          - { name: author, label: Autor wpisu, type: string }
+          - { name: date, label: Data, type: string }
+          - { name: cat, label: Kategoria, type: string }
+          - { name: form, label: Forma, type: string }
+
+          - name: candle
+            label: Zapalono znicz
+            type: boolean
