@@ -3,6 +3,7 @@ backend:
   repo: lubartowskiszlakpamieci/szlak--pamieci-karty
   branch: main
   base_url: https://decapbridge.com
+  auth_endpoint: /api/v1/github/authorize
   
   commit_messages:
     create: "Dodano wpis w {{collection}} — {{author-name}} via panel"
