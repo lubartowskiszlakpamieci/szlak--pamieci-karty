@@ -1,0 +1,27 @@
+media:
+  input: images
+  output: /images
+
+content:
+  - name: panteon
+    label: Panteon Bohaterów
+    type: file
+    path: content/panteon.json
+    format: json
+    fields:
+      - name: heroes
+        label: Bohaterowie
+        type: list
+        fields:
+          - name: name
+            label: Imię i nazwisko
+            type: string
+          - name: role
+            label: Rola
+            type: string
+          - name: bio
+            label: Biografia
+            type: rich-text
+          - name: photo
+            label: Zdjęcie
+            type: image
