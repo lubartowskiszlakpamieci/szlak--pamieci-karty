@@ -3,7 +3,7 @@ backend:
   repo: lubartowskiszlakpamieci/szlak--pamieci-karty
   branch: main
   auth_type: pkce
-  app_id:Ov23liHoBYLAkAZF3Uf1
+  app_id: Ov23liHoBYLAkAZF3Uf1
   commit_messages:
     create: "Dodano wpis w {{collection}} — {{author-name}} via panel"
     update: "Edycja {{collection}} — {{author-name}} via panel"
