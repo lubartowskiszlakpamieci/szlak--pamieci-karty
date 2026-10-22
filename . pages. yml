@@ -25,3 +25,58 @@ content:
           - name: photo
             label: Zdjęcie
             type: image
+
+  - name: plots
+    label: Mogiły i Kwatery
+    type: file
+    path: content/plots.json
+    format: json
+    fields:
+      - name: plots
+        label: Lista Mogił
+        type: list
+        fields:
+          - name: id_mogily
+            label: ID Mogiły
+            type: string
+          - name: kwatera
+            label: Kwatera
+            type: string
+          - name: sektor
+            label: Sektor
+            type: string
+          - name: nazwa_obiektu
+            label: Nazwa obiektu
+            type: string
+          - name: opis_lokalizacji
+            label: Opis lokalizacji
+            type: string
+          - name: kompletny_profil
+            label: Kompletny profil
+            type: boolean
+          - name: napis_tablicy
+            label: Napis na tablicy
+            type: text
+          - name: grupy
+            label: Grupy / Daty pochówku
+            type: list
+            fields:
+              - name: data
+                label: Data / Okres
+                type: string
+              - name: adnotacja
+                label: Adnotacja
+                type: string
+              - name: osoby
+                label: Osoby spoczywające
+                type: list
+                fields:
+                  - name: id
+                    label: ID Osoby
+                    type: string
+                  - name: imie_nazwisko
+                    label: Imię i nazwisko
+                    type: string
+                  - name: wiek
+                    label: Wiek
+                    type: number
