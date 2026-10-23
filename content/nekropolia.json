@@ -2,29 +2,26 @@
   "plots": [
     {
       "id_mogily": "plot-01",
-      "kwatera": "",
-      "sektor": "Cmentarz Parafialny",
-      "nazwa_obiektu": "Cmentarz Wojenny 1915–18",
-      "kompletny_profil": "Miejsce spoczynku ok. 1000 żołnierzy różnych narodowości, w tym wielu Polaków. Powiązany bohater: pplk Jan Kiwerski ps. „Oliwa”.",
-      "pochowani": [],
+      "nazwa_obiektu": "Kwatera z grobami nieznanych żołnierzy",
+      "kwatera": "V",
+      "kompletny_profil": "Miejsce spoczynku ok. 1000 żołnierzy różnych narodowości, w tym wielu Polaków. ",
       "lat": 51.4658,
       "lng": 22.6115
     },
     {
       "id_mogily": "plot-02",
-      "kwatera": "",
+      "nazwa_obiektu": "Kwatera Wrześniowa 1939-1945",
       "sektor": "Cmentarz Parafialny",
-      "nazwa_obiektu": "Kwatera Wrześniowa 1939",
-      "kompletny_profil": "Mogiła żołnierzy WP poległych w obronie Lubartowa we wrześniu 1939 r. Powiązany bohater: por. rez. Władysław Czermiński ps. „Jastrząb”.",
-      "pochowani": [],
+      "kwatera": "XV/47",
+      "kompletny_profil": "Mogiła żołnierzy WP poległych w obronie Lubartowa we wrześniu 1939-1945 r. Spoczęli tu  żołnierze z jednostek  walczących w rejonie Lubartowa",
       "lat": 51.4669,
       "lng": 22.6127
     },
     {
       "id_mogily": "plot-03",
-      "kwatera": "I",
+      "nazwa_obiektu": "Obelisk Żołnierzy Oddziału \"Uskoka\"",
       "sektor": "Sektor XII",
-      "nazwa_obiektu": "Obelisk Żołnierzy Oddziału Uskoka",
+      "kwatera": "XII",
       "kompletny_profil": "„Żołnierzom AK z oddziału Uskoka zamordowanym przez Urząd Bezpieczeństwa. Cześć ich pamięci.” (data na cokole: 20 maja, prawdopodobnie 1988)",
       "pochowani": [
         "Śledziński Czesław (I.21)",
@@ -39,21 +36,19 @@
     },
     {
       "id_mogily": "plot-04",
-      "kwatera": "",
-      "sektor": "Cmentarz Parafialny",
       "nazwa_obiektu": "Nagrobek Legionistów",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "IV",
       "kompletny_profil": "Upamiętnienie żołnierzy Legionów Polskich poległych w 1915 roku w staraniach o niepodległość. Powiązany bohater: Józef Szymula ps. „Jordan”.",
-      "pochowani": [],
       "lat": 51.4666,
       "lng": 22.6122
     },
     {
       "id_mogily": "plot-05",
-      "kwatera": "",
-      "sektor": "Cmentarz Parafialny",
       "nazwa_obiektu": "Symboliczny Grób kpt. „Uskoka”",
-      "kompletny_profil": "Upamiętnienie kpt. Zdzisława Brońskiego (1912–1949), dowódcy AK-WiN — legendy lubartowskich lasów, który w godzinie „Burzy” zamienił słowa przysięgi w czyn.",
-      "pochowani": [],
+      "sektor": "XV",
+      "kwatera": "XV/50",
+      "kompletny_profil": "Upamiętnienie kpt. Zdzisława Brońskiego (1912–1949), dowódcy AK-WiN — legendy lubartowskich lasów, który w godzinie „Burzy” zamienił słowa przysięgi w czyn. To najbardziej bezkompromisowy dowódca antykomunistycznego podziemia niepodległościowego. Zginął tragicznie   osaczony pod Łęczną  przez UB  21 maja 1949 roku. ",
       "lat": 51.4672,
       "lng": 22.613
     }
