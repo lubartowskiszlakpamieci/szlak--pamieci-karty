@@ -51,6 +51,175 @@
       "kompletny_profil": "Upamiętnienie kpt. Zdzisława Brońskiego (1912–1949), dowódcy AK-WiN — legendy lubartowskich lasów, który w godzinie „Burzy” zamienił słowa przysięgi w czyn. To najbardziej bezkompromisowy dowódca antykomunistycznego podziemia niepodległościowego. Zginął tragicznie   osaczony pod Łęczną  przez UB  21 maja 1949 roku. ",
       "lat": 51.4672,
       "lng": 22.613
+    },
+  {
+
+      "id_mogily": "nekro-bazan",
+      "nazwa_obiektu": "Mogiła Józefa Bazana „Płomienia”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "X, Grób 9",
+      "kompletny_profil": "Żołnierz podziemia niepodległościowego Obwodu Lubartów AK.",
+      "pochowani": [
+        "Józef Bazan ps. Płomień"
+      ],
+      "lat": 51.4665,
+      "lng": 22.6120
+    },
+    {
+      "id_mogily": "nekro-cyranek",
+      "nazwa_obiektu": "Mogiła Kazimierza Cyranka „Jaszczurki”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "V, Grób 557",
+      "kompletny_profil": "Aktywny uczestnik walk niepodległościowych na ziemi lubartowskiej.",
+      "pochowani": [
+        "Kazimierz Cyranek ps. Jaszczurka"
+      ],
+      "lat": 51.4662,
+      "lng": 22.6118
+    },
+    {
+      "id_mogily": "nekro-edelman",
+      "nazwa_obiektu": "Mogiła Czesława Edelmana „Cymona”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "VII, Grób 67",
+      "kompletny_profil": "Uczestnik konspiracji niepodległościowej Obwodu AK Lubartów.",
+      "pochowani": [
+        "Czesław Edelman ps. Cymon"
+      ],
+      "lat": 51.4667,
+      "lng": 22.6124
+    },
+    {
+      "id_mogily": "nekro-miduch",
+      "nazwa_obiektu": "Mogiła Anieli Miduch „Kamy”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "V, Grób 428",
+      "kompletny_profil": "Zaangażowana w służbę łączności i sanitarną podziemia niepodległościowego.",
+      "pochowani": [
+        "Aniela Miduch ps. Kama"
+      ],
+      "lat": 51.4663,
+      "lng": 22.6119
+    },
+    {
+      "id_mogily": "nekro-mika",
+      "nazwa_obiektu": "Mogiła Romana Miki „Pługa”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "VI, Grób 1",
+      "kompletny_profil": "Żołnierz konspiracji niepodległościowej w rejonie Lubartowa.",
+      "pochowani": [
+        "Roman Mika ps. Pług"
+      ],
+      "lat": 51.4664,
+      "lng": 22.6121
+    },
+    {
+      "id_mogily": "nekro-mozdzinski",
+      "nazwa_obiektu": "Mogiła Adama Możdzińskiego „Korda”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "X, Grób 285",
+      "kompletny_profil": "Uczestnik struktur wojskowych Polskiego Państwa Podziemnego.",
+      "pochowani": [
+        "Adam Możdziński ps. Kord"
+      ],
+      "lat": 51.4666,
+      "lng": 22.6123
+    },
+    {
+      "id_mogily": "nekro-mucharski",
+      "nazwa_obiektu": "Symboliczny Grób Bolesława Mucharskiego „Lekarza”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "XIII, Grób 10 (symboliczny)",
+      "kompletny_profil": "Niosący pomoc rannym i chorym żołnierzom podziemia niepodległościowego. Upamiętniony symboliczną mogiłą.",
+      "pochowani": [
+        "Bolesław Mucharski ps. Lekarz"
+      ],
+      "lat": 51.4670,
+      "lng": 22.6128
+    },
+    {
+      "id_mogily": "nekro-juralomski",
+      "nazwa_obiektu": "Mogiła Józefa Surmy Jurałomskiego „Jura”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "V, Grób 68",
+      "kompletny_profil": "Uczestnik konspiracji zbrojnej ziemi lubartowskiej.",
+      "pochowani": [
+        "Józef Surma Jurałomski ps. Jur"
+      ],
+      "lat": 51.4661,
+      "lng": 22.6117
+    },
+    {
+      "id_mogily": "nekro-szulc",
+      "nazwa_obiektu": "Mogiła ks. Aleksandra Szulca",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "IV, Grób 23",
+      "kompletny_profil": "Duchowny wspierający lokalną społeczność oraz obrońców Ojczyzny w trudnych latach okupacji.",
+      "pochowani": [
+        "ks. Aleksander Szulc"
+      ],
+      "lat": 51.4659,
+      "lng": 22.6115
+    },
+    {
+      "id_mogily": "nekro-szymula",
+      "nazwa_obiektu": "Mogiła Józefa Szymuli „Jordana”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "XVI, Grób 67",
+      "kompletny_profil": "Żołnierz podziemia zbrojnego na Lubelszczyźnie.",
+      "pochowani": [
+        "Józef Szymula ps. Jordan"
+      ],
+      "lat": 51.4673,
+      "lng": 22.6131
+    },
+    {
+      "id_mogily": "nekro-furtak",
+      "nazwa_obiektu": "Mogiła Lucjana Furtaka „Pawła”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "X, Grób 318",
+      "kompletny_profil": "Uczestnik powojennego oporu niepodległościowego przeciwko aparatowi represji.",
+      "pochowani": [
+        "Lucjan Furtak ps. Paweł"
+      ],
+      "lat": 51.4666,
+      "lng": 22.6122
+    },
+    {
+      "id_mogily": "nekro-jezior",
+      "nazwa_obiektu": "Mogiła Romana Jeziora „Junga / Okonia”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "XV, Grób 48",
+      "kompletny_profil": "Walczył w strukturach niepodległościowych w rejonie Lubartowa (WiN).",
+      "pochowani": [
+        "Roman Jezior ps. Jung / Okoń"
+      ],
+      "lat": 51.4671,
+      "lng": 22.6129
+    },
+    {
+      "id_mogily": "nekro-kucminski",
+      "nazwa_obiektu": "Mogiła Kazimierza Kućmińskiego",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "XV, Grób 49",
+      "kompletny_profil": "Uczestnik lokalnych struktur niepodległościowych.",
+      "pochowani": [
+        "Kazimierz Kućmiński"
+      ],
+      "lat": 51.4672,
+      "lng": 22.6130
+    },
+    {
+      "id_mogily": "nekro-bronski",
+      "nazwa_obiektu": "Symboliczny Grób kpt. Zdzisława Brońskiego „Uskoka”",
+      "sektor": "Cmentarz Parafialny",
+      "kwatera": "XV, Grób 50 (symboliczny)",
+      "kompletny_profil": "Legendarny dowódca podziemia niepodległościowego na Lubelszczyźnie. W czasie okupacji niemieckiej dowódca OP I/8 pp Leg. AK, następnie komendant Ośrodka I WiN. Zginął tragicznie osaczony pod Łęczną przez UB 21 maja 1949 roku.",
+      "pochowani": [
+        "kpt. Zdzisław Broński ps. Uskok (1912–1949)"
+      ],
+      "lat": 51.4672,
+      "lng": 22.6131
     }
   ]
 }
