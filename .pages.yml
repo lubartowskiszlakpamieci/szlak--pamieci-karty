@@ -100,7 +100,9 @@ content:
           - name: lng
             label: Długość geograficzna
             type: number
-
+            name: photo 
+            label: Zdjęcie obiektu
+            type: image
   - name: hold
     label: Księga Hołdu
     type: file
