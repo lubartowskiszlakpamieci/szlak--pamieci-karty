@@ -15,8 +15,8 @@
       "era": "WOJNA 1939–1945",
       "type": "Pomnik / tablica",
       "addr": "ul. Słowackiego 6",
-      "lat": 51.46444,
-      "lng": 22.60861
+      "lat": 51.4621,
+      "lng": 22.6068
     },
     {
       "id": 3,
@@ -24,8 +24,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Cmentarna 4",
-      "lat": 51.4631,
-      "lng": 22.6081
+      "lat": 51.4641,
+      "lng": 22.6092
     },
     {
       "id": 4,
@@ -33,8 +33,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Słowackiego 7",
-      "lat": 51.4619,
-      "lng": 22.6062
+      "lat": 51.4618,
+      "lng": 22.6060
     },
     {
       "id": 5,
@@ -42,8 +42,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Legionów 2",
-      "lat": 51.4605,
-      "lng": 22.605
+      "lat": 51.4585,
+      "lng": 22.6035
     },
     {
       "id": 6,
@@ -51,8 +51,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Lubelska 34",
-      "lat": 51.4598,
-      "lng": 22.6041
+      "lat": 51.4580,
+      "lng": 22.6028
     },
     {
       "id": 7,
@@ -60,8 +60,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Cicha 8",
-      "lat": 51.4589,
-      "lng": 22.603
+      "lat": 51.4671,
+      "lng": 22.6035
     },
     {
       "id": 8,
@@ -69,8 +69,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Poprzeczna 12",
-      "lat": 51.4642,
-      "lng": 22.6091
+      "lat": 51.4650,
+      "lng": 22.6120
     },
     {
       "id": 9,
@@ -78,8 +78,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Lipowa 3",
-      "lat": 51.465,
-      "lng": 22.6105
+      "lat": 51.4662,
+      "lng": 22.6100
     },
     {
       "id": 10,
@@ -87,8 +87,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Pomnik / tablica",
       "addr": "Plac Wolności 1",
-      "lat": 51.457,
-      "lng": 22.6012
+      "lat": 51.4627,
+      "lng": 22.6075
     },
     {
       "id": 11,
@@ -96,8 +96,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Partyzantów 15",
-      "lat": 51.4581,
-      "lng": 22.6025,
+      "lat": 51.4612,
+      "lng": 22.6020,
       "desc": "Związana z sierż. Karolem Skaruchem ps. „Warta” — szefem BIP Obwodu, odpowiedzialnym za wydawanie i kolportaż podziemnej prasy."
     },
     {
@@ -106,8 +106,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Kościuszki 20",
-      "lat": 51.4611,
-      "lng": 22.6068
+      "lat": 51.4605,
+      "lng": 22.6055
     },
     {
       "id": 13,
@@ -116,7 +116,7 @@
       "type": "Pomnik / mogiła",
       "addr": "Cmentarz Parafialny",
       "lat": 51.4665,
-      "lng": 22.612
+      "lng": 22.6120
     },
     {
       "id": 14,
@@ -124,7 +124,7 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "Cmentarz Parafialny",
-      "lat": 51.467,
+      "lat": 51.4670,
       "lng": 22.6128
     },
     {
@@ -142,8 +142,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Nowa 5",
-      "lat": 51.4555,
-      "lng": 22.6001
+      "lat": 51.4640,
+      "lng": 22.6150
     },
     {
       "id": 17,
@@ -151,8 +151,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Polna 18",
-      "lat": 51.454,
-      "lng": 22.5985
+      "lat": 51.4550,
+      "lng": 22.5950
     },
     {
       "id": 18,
@@ -160,8 +160,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Pomnik / tablica",
       "addr": "ul. Piaskowa 2",
-      "lat": 51.468,
-      "lng": 22.614
+      "lat": 51.4680,
+      "lng": 22.6140
     },
     {
       "id": 19,
@@ -169,8 +169,8 @@
       "era": "WOJNA 1920",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Krótka 1",
-      "lat": 51.46,
-      "lng": 22.6045
+      "lat": 51.4615,
+      "lng": 22.6085
     },
     {
       "id": 20,
@@ -197,8 +197,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Ogrodowa 4",
-      "lat": 51.4658,
-      "lng": 22.6112
+      "lat": 51.4635,
+      "lng": 22.6040
     },
     {
       "id": 23,
@@ -206,8 +206,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Lubelska 10",
-      "lat": 51.4592,
-      "lng": 22.6038
+      "lat": 51.4600,
+      "lng": 22.6045
     },
     {
       "id": 24,
@@ -215,8 +215,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Szewska 3",
-      "lat": 51.4578,
-      "lng": 22.602
+      "lat": 51.4610,
+      "lng": 22.6080
     },
     {
       "id": 25,
@@ -224,8 +224,8 @@
       "era": "POWSTANIE STYCZNIOWE",
       "type": "Pomnik / tablica",
       "addr": "Rondo Styczniowe",
-      "lat": 51.469,
-      "lng": 22.615
+      "lat": 51.4685,
+      "lng": 22.6160
     },
     {
       "id": 26,
@@ -234,7 +234,7 @@
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Słowackiego 12",
       "lat": 51.4615,
-      "lng": 22.606
+      "lng": 22.6055
     },
     {
       "id": 27,
@@ -242,8 +242,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Lubelska 97A, Kościół Matki Bożej NP",
-      "lat": 51.4552,
-      "lng": 22.6074,
+      "lat": 51.4520,
+      "lng": 22.6050,
       "desc": "Dowódca oddziału partyzanckiego AK (1914–1945). Zamordowany na Zamku Lubelskim 12.04.1945 r."
     },
     {
@@ -262,8 +262,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Mural",
       "addr": "ul. 1 Maja 82, budynek RCEZ",
-      "lat": 51.462,
-      "lng": 22.6,
+      "lat": 51.4565,
+      "lng": 22.6010,
       "desc": "Największy w mieście mural poświęcony 27. Wołyńskiej Dywizji Piechoty AK."
     },
     {
@@ -272,8 +272,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci",
       "addr": "Skrobów Kolonia",
-      "lat": 51.4628,
-      "lng": 22.5498,
+      "lat": 51.4850,
+      "lng": 22.5800,
       "desc": "Miejsce obozu internowania żołnierzy AK podstępnie rozbrojonych przez NKWD i UB zaraz po Akcji „Burza”."
     },
     {
@@ -282,17 +282,17 @@
       "era": "OKRES POWOJENNY",
       "type": "Tablica AK i 27 WDP",
       "addr": "ul. Kolejowa, Dworzec PKP",
-      "lat": 51.4655,
-      "lng": 22.6152
+      "lat": 51.4542,
+      "lng": 22.6105
     },
     {
       "id": 32,
       "name": "Symboliczna tablica ppor. Mirosława Orzechowskiego",
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica (grób nieznany)",
-      "addr": "Cmentarz Parafialny św. Anny (współrzędne przybliżone)",
-      "lat": 51.462753,
-      "lng": 22.6028411,
+      "addr": "Cmentarz Parafialny św. Anny",
+      "lat": 51.4668,
+      "lng": 22.6125,
       "desc": "Pilot myśliwski RAF, 308. Dywizjon. Zginął nad Kanałem La Manche 22.07.1941 r. w wieku 25 lat."
     },
     {
@@ -300,9 +300,9 @@
       "name": "Bunkier i pomnik kpt. Zdzisława Brońskiego „Uskoka”",
       "era": "OKRES POWOJENNY",
       "type": "Miejsce śmierci / pomnik (poza gminą Lubartów)",
-      "addr": "Nowogród (dawniej Dąbrówka), gm. Ludwin — współrzędne przybliżone",
-      "lat": 51.3,
-      "lng": 22.88,
+      "addr": "Nowogród (dawniej Dąbrówka), gm. Ludwin",
+      "lat": 51.3500,
+      "lng": 22.8500,
       "desc": "21 maja 1949 r. otoczony przez grupę operacyjną UB-KBW-MO, zdetonował granat, wybierając śmierć zamiast pojmania."
     },
     {
@@ -310,7 +310,7 @@
       "name": "Miejsce śmierci ppor. Stanisława Kuchciewicza „Wiktora”",
       "era": "OKRES POWOJENNY",
       "type": "Miejsce śmierci (poza gminą Lubartów)",
-      "addr": "Piaski, dawna Gminna Kasa Spółdzielcza",
+      "addr": "Piaski",
       "lat": 51.1806,
       "lng": 22.9074,
       "desc": "Ostatni dowódca podziemia niepodległościowego w powiecie lubartowskim. Zginął 10.02.1953 r."
@@ -321,8 +321,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce represji (1944–1956)",
       "addr": "ul. Aleja 1000-lecia 4, Lubartów",
-      "lat": 51.462,
-      "lng": 22.607
+      "lat": 51.4610,
+      "lng": 22.6065
     },
     {
       "id": 36,
@@ -339,8 +339,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci (1944–dziś)",
       "addr": "ul. Słowackiego 6, Lubartów",
-      "lat": 51.462,
-      "lng": 22.607
+      "lat": 51.4621,
+      "lng": 22.6068
     },
     {
       "id": 38,
@@ -357,8 +357,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce walk (poza gminą Lubartów)",
       "addr": "Zezulin, gm. Ludwin",
-      "lat": 51.38,
-      "lng": 22.83
+      "lat": 51.3800,
+      "lng": 22.8300
     },
     {
       "id": 40,
@@ -366,8 +366,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Teren działań (poza gminą Lubartów)",
       "addr": "Gmina Spiczyn, pow. łęczyński",
-      "lat": 51.36,
-      "lng": 22.8
+      "lat": 51.3600,
+      "lng": 22.8000
     },
     {
       "id": 41,
@@ -375,8 +375,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce walk (poza gminą Lubartów)",
       "addr": "Serniki, pow. lubartowski",
-      "lat": 51.433,
-      "lng": 22.667
+      "lat": 51.4330,
+      "lng": 22.6670
     },
     {
       "id": 42,
@@ -393,8 +393,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci",
       "addr": "Lubartów, centrum",
-      "lat": 51.462,
-      "lng": 22.607
+      "lat": 51.4620,
+      "lng": 22.6070
     },
     {
       "id": 44,
@@ -412,8 +412,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce represji (1944–1956)",
       "addr": "Firlej",
-      "lat": 51.5592154,
-      "lng": 22.5090879,
+      "lat": 51.5592,
+      "lng": 22.5090,
       "desc": "W Rejonie IV (Firlej) UB i NKWD aresztowały 74 członków AK, niemal połowę z nich w samą Wigilię 1944 roku."
     },
     {
@@ -422,8 +422,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci",
       "addr": "Uciekajka, gm. Ludwin",
-      "lat": 51.3676648,
-      "lng": 22.9898731,
+      "lat": 51.3676,
+      "lng": 22.9898,
       "desc": "Ponad 200-osobowa grupa operacyjna NKWD, wsparta czołgami, zaskoczyła 25 partyzantów oddziału „Uskoka” i 27 WDP AK. Zginęło 7 „leśnych”, kilkudziesięciu mieszkańców wsi aresztowano."
     },
     {
@@ -432,8 +432,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci",
       "addr": "Bojki k. Ostrowa Lubelskiego",
-      "lat": 51.5278378,
-      "lng": 22.846247,
+      "lat": 51.5278,
+      "lng": 22.8462,
       "desc": "Zmęczony po wcześniejszej akcji oddział „Uskoka” został zaskoczony przez grupę operacyjną NKWD-UB-MO z Włodawy. Stracił czterech zabitych i znaczną część uzbrojenia."
     },
     {
@@ -442,8 +442,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci",
       "addr": "Samoklęski / Kamionka",
-      "lat": 51.4545153,
-      "lng": 22.4211848,
+      "lat": 51.4850,
+      "lng": 22.3800,
       "desc": "Aresztowanie komendanta Rejonu V Dionizego Daniewskiego „Kruka” 22 grudnia 1945 r. zapoczątkowało lawinową „wsypę”, która w ciągu miesiąca doprowadziła do rozbicia sztabu całego Obwodu WiN."
     }
   ]
