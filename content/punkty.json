@@ -12,7 +12,7 @@
     {
       "id": 2,
       "name": "Bazylika św. Anny - Tablica pamięci żołnierzom Armii Krajowej",
-      "era": "WOJNA 1939–1945",
+      "era": "zabytek /świadek historii / miejsce kultu",
       "type": "Pomnik / tablica",
       "addr": "ul. Słowackiego 6",
       "lat": 51.4621,
@@ -34,7 +34,7 @@
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Słowackiego 7",
       "lat": 51.4618,
-      "lng": 22.6060
+      "lng": 22.606
     },
     {
       "id": 5,
@@ -51,7 +51,7 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Lubelska 34",
-      "lat": 51.4580,
+      "lat": 51.458,
       "lng": 22.6028
     },
     {
@@ -69,8 +69,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Poprzeczna 12",
-      "lat": 51.4650,
-      "lng": 22.6120
+      "lat": 51.465,
+      "lng": 22.612
     },
     {
       "id": 9,
@@ -79,7 +79,7 @@
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Lipowa 3",
       "lat": 51.4662,
-      "lng": 22.6100
+      "lng": 22.61
     },
     {
       "id": 10,
@@ -97,7 +97,7 @@
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Partyzantów 15",
       "lat": 51.4612,
-      "lng": 22.6020,
+      "lng": 22.602,
       "desc": "Związana z sierż. Karolem Skaruchem ps. „Warta” — szefem BIP Obwodu, odpowiedzialnym za wydawanie i kolportaż podziemnej prasy."
     },
     {
@@ -116,7 +116,7 @@
       "type": "Pomnik / mogiła",
       "addr": "Cmentarz Parafialny",
       "lat": 51.4665,
-      "lng": 22.6120
+      "lng": 22.612
     },
     {
       "id": 14,
@@ -124,7 +124,7 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "Cmentarz Parafialny",
-      "lat": 51.4670,
+      "lat": 51.467,
       "lng": 22.6128
     },
     {
@@ -142,8 +142,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Nowa 5",
-      "lat": 51.4640,
-      "lng": 22.6150
+      "lat": 51.464,
+      "lng": 22.615
     },
     {
       "id": 17,
@@ -151,8 +151,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Polna 18",
-      "lat": 51.4550,
-      "lng": 22.5950
+      "lat": 51.455,
+      "lng": 22.595
     },
     {
       "id": 18,
@@ -160,8 +160,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Pomnik / tablica",
       "addr": "ul. Piaskowa 2",
-      "lat": 51.4680,
-      "lng": 22.6140
+      "lat": 51.468,
+      "lng": 22.614
     },
     {
       "id": 19,
@@ -198,7 +198,7 @@
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Ogrodowa 4",
       "lat": 51.4635,
-      "lng": 22.6040
+      "lng": 22.604
     },
     {
       "id": 23,
@@ -206,7 +206,7 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Obiekt historyczny / architektura",
       "addr": "ul. Lubelska 10",
-      "lat": 51.4600,
+      "lat": 51.46,
       "lng": 22.6045
     },
     {
@@ -215,8 +215,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Szewska 3",
-      "lat": 51.4610,
-      "lng": 22.6080
+      "lat": 51.461,
+      "lng": 22.608
     },
     {
       "id": 25,
@@ -225,7 +225,7 @@
       "type": "Pomnik / tablica",
       "addr": "Rondo Styczniowe",
       "lat": 51.4685,
-      "lng": 22.6160
+      "lng": 22.616
     },
     {
       "id": 26,
@@ -242,8 +242,8 @@
       "era": "II WOJNA SWIATOWA",
       "type": "Miejsce pamięci / tablica",
       "addr": "ul. Lubelska 97A, Kościół Matki Bożej NP",
-      "lat": 51.4520,
-      "lng": 22.6050,
+      "lat": 51.452,
+      "lng": 22.605,
       "desc": "Dowódca oddziału partyzanckiego AK (1914–1945). Zamordowany na Zamku Lubelskim 12.04.1945 r."
     },
     {
@@ -263,7 +263,7 @@
       "type": "Mural",
       "addr": "ul. 1 Maja 82, budynek RCEZ",
       "lat": 51.4565,
-      "lng": 22.6010,
+      "lng": 22.601,
       "desc": "Największy w mieście mural poświęcony 27. Wołyńskiej Dywizji Piechoty AK."
     },
     {
@@ -272,8 +272,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci",
       "addr": "Skrobów Kolonia",
-      "lat": 51.4850,
-      "lng": 22.5800,
+      "lat": 51.485,
+      "lng": 22.58,
       "desc": "Miejsce obozu internowania żołnierzy AK podstępnie rozbrojonych przez NKWD i UB zaraz po Akcji „Burza”."
     },
     {
@@ -301,8 +301,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce śmierci / pomnik (poza gminą Lubartów)",
       "addr": "Nowogród (dawniej Dąbrówka), gm. Ludwin",
-      "lat": 51.3500,
-      "lng": 22.8500,
+      "lat": 51.35,
+      "lng": 22.85,
       "desc": "21 maja 1949 r. otoczony przez grupę operacyjną UB-KBW-MO, zdetonował granat, wybierając śmierć zamiast pojmania."
     },
     {
@@ -321,7 +321,7 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce represji (1944–1956)",
       "addr": "ul. Aleja 1000-lecia 4, Lubartów",
-      "lat": 51.4610,
+      "lat": 51.461,
       "lng": 22.6065
     },
     {
@@ -357,8 +357,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce walk (poza gminą Lubartów)",
       "addr": "Zezulin, gm. Ludwin",
-      "lat": 51.3800,
-      "lng": 22.8300
+      "lat": 51.38,
+      "lng": 22.83
     },
     {
       "id": 40,
@@ -366,8 +366,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Teren działań (poza gminą Lubartów)",
       "addr": "Gmina Spiczyn, pow. łęczyński",
-      "lat": 51.3600,
-      "lng": 22.8000
+      "lat": 51.36,
+      "lng": 22.8
     },
     {
       "id": 41,
@@ -375,8 +375,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce walk (poza gminą Lubartów)",
       "addr": "Serniki, pow. lubartowski",
-      "lat": 51.4330,
-      "lng": 22.6670
+      "lat": 51.433,
+      "lng": 22.667
     },
     {
       "id": 42,
@@ -393,8 +393,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci",
       "addr": "Lubartów, centrum",
-      "lat": 51.4620,
-      "lng": 22.6070
+      "lat": 51.462,
+      "lng": 22.607
     },
     {
       "id": 44,
@@ -413,7 +413,7 @@
       "type": "Miejsce represji (1944–1956)",
       "addr": "Firlej",
       "lat": 51.5592,
-      "lng": 22.5090,
+      "lng": 22.509,
       "desc": "W Rejonie IV (Firlej) UB i NKWD aresztowały 74 członków AK, niemal połowę z nich w samą Wigilię 1944 roku."
     },
     {
@@ -442,8 +442,8 @@
       "era": "OKRES POWOJENNY",
       "type": "Miejsce pamięci",
       "addr": "Samoklęski / Kamionka",
-      "lat": 51.4850,
-      "lng": 22.3800,
+      "lat": 51.485,
+      "lng": 22.38,
       "desc": "Aresztowanie komendanta Rejonu V Dionizego Daniewskiego „Kruka” 22 grudnia 1945 r. zapoczątkowało lawinową „wsypę”, która w ciągu miesiąca doprowadziła do rozbicia sztabu całego Obwodu WiN."
     }
   ]
