@@ -6,10 +6,8 @@
 // do zwracających się użytkowników — bez potrzeby ręcznego
 // podbijania CACHE_VERSION przy każdym wdrożeniu.
 // ============================================================
+const CACHE_VERSION = 'szlak-pamieci-v5';
 
-const CACHE_VERSION = 'szlak-pamieci-v4';
-
-// Pliki powłoki aplikacji (fallback, gdy sieć niedostępna)
 const APP_SHELL = [
   './',
   './index.html',
@@ -19,29 +17,37 @@ const APP_SHELL = [
   './icon-512.png'
 ];
 
-// INSTALACJA
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then((cache) => {
-      return cache.addAll(APP_SHELL);
+    caches.open(CACHE_VERSION).then(async (cache) => {
+      for (const url of APP_SHELL) {
+        try {
+          const res = await fetch(url, { cache: 'no-store' });
+          if (res.ok) {
+            await cache.put(url, res);
+          } else {
+            console.warn('[SW] Pominięto (brak pliku / status):', url, res.status);
+          }
+        } catch (err) {
+          console.warn('[SW] Błąd pobierania do cache:', url, err);
+        }
+      }
     }).then(() => self.skipWaiting())
   );
 });
 
-// AKTYWACJA — czyszczenie WSZYSTKICH starych cache (niezależnie od nazwy)
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
+    caches.keys().then((keys) =>
+      Promise.all(
         keys
           .filter((key) => key !== CACHE_VERSION)
           .map((key) => caches.delete(key))
-      );
-    }).then(() => self.clients.claim())
+      )
+    ).then(() => self.clients.claim())
   );
 });
 
-// FETCH — NETWORK-FIRST: zawsze próbuj sieci, cache tylko jako fallback offline
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
@@ -51,21 +57,21 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // sukces sieciowy -> zaktualizuj cache świeżą kopią
-        const clone = response.clone();
-        if (isOwnOrigin) {
+        if (response && response.ok && isOwnOrigin) {
+          const clone = response.clone();
           caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, clone));
         }
         return response;
       })
       .catch(() => {
-        // brak sieci -> uzyj cache, a dla nawigacji fallback do index.html
         return caches.match(event.request).then((cached) => {
           if (cached) return cached;
           if (event.request.mode === 'navigate') {
             return caches.match('./index.html');
           }
+          return new Response('', { status: 503, statusText: 'Offline' });
         });
       })
   );
 });
+
